@@ -972,6 +972,23 @@ if (menu.hasClass('visible')) {
       $(this).toggleClass('open');
     }
   });
+  // First level submenu
+  $('.icd_desktop_nav .sub_menu').on('click', function(e) {
+    e.stopPropagation(); // prevent bubbling
+    $('.icd__header__wrapper')
+      .addClass('add_height')
+      .stop()
+      .animate({ height: '175px' }, 300);
+  });
+
+  // Second level submenu
+  $('.icd_desktop_nav .sub_menu .other__menu').on('click', function(e) {
+    e.stopPropagation();
+    $('.icd__header__wrapper')
+      .stop()
+      .animate({ height: '275px' }, 300);
+  });
+
 });
 
 

@@ -9601,7 +9601,40 @@ ul.icd__countries__list.single-column {
     flex-direction: row;
     gap: 18px;
 }
-
+.icd__nav_d_menus #icd__primary__list li.menu-item-has-children > .sub-menu > li.menu-item-has-children.child_submenu_open:before {
+    transform: rotate(-135deg);
+}
+.icd__nav_d_menus #icd__primary__list li.menu-item-has-children > .sub-menu > li.menu-item-has-children:before {
+    content: '';
+    background: url(/wp-content/uploads/2024/12/menu-arrow.svg);
+    background-repeat: no-repeat;
+    top: 12px;
+    position: absolute;
+    left: 38px;
+    background-size: contain;
+    width: 8px;
+    height: 6px;
+    transform: rotate(-50deg);
+}
+.icd__nav_d_menus .other__menu a {
+    z-index: 9999999999;
+    position: relative;
+}
+.icd__nav_d_menus .child_submenu_open .sub-menu {
+    padding-left: 60px;
+    margin-top: -23px;
+}
+.icd__nav_d_menus #icd__primary__list li.menu-item-has-children > .sub-menu > li.menu-item-has-children {
+    padding-left: 0;
+}
+.icd__header__wrapper.add_height {
+    align-items: flex-start;
+}
+.icd__header__wrapper.add_height .icd_header_right {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
 .icd_header_left {
     display: flex;
     gap: 58px;
@@ -9623,5 +9656,8 @@ ul.icd__countries__list.single-column {
 @media (min-width: 767px){
 .mbl_only, .icd_desktop_nav .lang-item{
     display: none!important;
+}
+.icd__nav_d_menus #icd__primary__list li .sub-menu a {
+    line-height: 25.5px;
 }
 }
