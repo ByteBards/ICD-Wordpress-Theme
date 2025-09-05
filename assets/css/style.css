@@ -833,7 +833,7 @@ img.custom-logo {
 }
 #icd__primary__list li a {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 13px;
     color: var(--blueCyan);
     text-transform: uppercase;
     font-weight: 500;
@@ -1101,8 +1101,10 @@ html[lang="ar"] .cookie__policy__wrapper.single__pages__wrapper > h1 {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  min-width: 685px;
-  min-height: 695px;
+  /* min-width: 685px; */
+  min-width: 613px;
+  /* min-height: 695px; */
+  min-height: 622px;
   background-color: var(--orangeYellow);
   padding: 50px 45px;
   border-radius: 20px;
@@ -1165,14 +1167,29 @@ html[lang="ar"] .cookie__policy__wrapper.single__pages__wrapper > h1 {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  min-width: 425px;
-  min-height: 475px;
+  /* min-width: 425px; */
+  min-width: 380px;
+  /* min-height: 475px; */
+  min-height: 425px;
   background-color: #fff;
-  padding: 37px 33px;
+  /* padding: 37px 33px; */
+  padding: 29px 19px;
   border-radius: 20px;
   position: relative;
 }
-.total__revenue__box__bg {
+.total__employee__box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 398px;
+  min-height: 425px;
+  background-color: var(--greenCyan);
+  padding: 29px 19px 73px;
+  border-radius: 20px;
+  position: relative;
+}
+.total__revenue__box__bg, .total__employee__box__bg {
   content: '';
   width: 100%;
   height: 100%;
@@ -1185,27 +1202,32 @@ html[lang="ar"] .cookie__policy__wrapper.single__pages__wrapper > h1 {
   border-radius: 20px;
   overflow: hidden;
 }
-.total__revenue__box__bg img{
+.total__revenue__box__bg img, .total__employee__box__bg img{
     border-radius: 20px;
     height: 100%;
     width: 100%;
 }
-.total_revenue__tag {
+.total_revenue__tag, .total_employee__tag {
   font-size: 33px;
   font-weight: 600;
   margin-bottom: 0;
   text-transform: capitalize;
 }
-.icd__groups__total__revenue {
+.icd__groups__total__revenue, .icd__groups__total__employee {
     position: relative;
     top: 75px;
 }
-.total__revenue__price {
-  font-size: 225px;
+.total__revenue__price, .total__employee__price {
+  font-size: 201px;
   font-weight: 800;
   color: var(--greenCyan);
   margin-bottom: 0;
   line-height: 0.9em;
+}
+.total__employee__price{
+    color: var(--orangeYellow);
+    position: relative;
+    z-index: 999;
 }
 .total_revenue__currency {
   font-size: 42px;

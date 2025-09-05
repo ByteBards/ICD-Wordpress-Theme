@@ -136,7 +136,7 @@
               <div class="icd__groups__total__revenue">
                 <div class="total__revenue__box">
                   <div class="total__revenue__box__bg">
-                    <img src="/wp-content/uploads/2024/11/total-revenue-shape.png">
+                    <!-- <img src="/wp-content/uploads/2024/11/total-revenue-shape.png"> -->
                   </div>
                   <div class="total__revenue__header">
                     <h6 class="total_revenue__tag"><?php echo get_field('total_revenue', 'options'); ?></h6>
@@ -144,6 +144,19 @@
                   <div class="total__revenue__footer">
                     <h3 class="total__revenue__price"><?php echo get_field('total_revenue_number', 'options'); ?></h3>
                     <h5 class="total_revenue__currency"><?php echo get_field('total_revenue_currency', 'options'); ?></h5>
+                  </div>
+                </div>
+              </div>
+              <div class="icd__groups__total__employee">
+                <div class="total__employee__box">
+                  <div class="total__employee__box__bg">
+                    <img src="/wp-content/uploads/2025/09/yellow_.png">
+                  </div>
+                  <div class="total__employee__header">
+                    <h6 class="total_employee__tag"><?php echo get_field('group_employees', 'options'); ?></h6>
+                  </div>
+                  <div class="total__employee__footer">
+                    <h3 class="total__employee__price"><?php echo get_field('group_employees_number', 'options'); ?></h3>
                   </div>
                 </div>
               </div>
