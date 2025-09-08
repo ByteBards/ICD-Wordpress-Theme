@@ -56,6 +56,8 @@
                                     <a target="_blank" href="https://www.google.com/maps/place/Investment+Corporation+of+Dubai+(ICD)/@25.1733337,55.2165615,12z/data=!4m10!1m2!2m1!1sICD!3m6!1s0x3e5f428e78f5d48f:0xf749ce05d9b49ae5!8m2!3d25.2273406!4d55.2913257!15sCgNJQ0RaBSIDaWNkkgESaW52ZXN0bWVudF9jb21wYW55mgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVVJPZG5KMVdFSm5FQUXgAQD6AQQIABAT!16s%2Fg%2F1trrbnw_?entry=ttu&g_ep=EgoyMDI1MDEyMi4wIKXMDSoASAFQAw%3D%3D"><?php echo $footer_address; ?></a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="icd__footer__col four">
                             <div class="icd__footer__menu">
                                 <?php
                                     wp_nav_menu(

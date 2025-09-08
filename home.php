@@ -166,7 +166,7 @@
       </div>
     </section>
 
-    <section class="icd__vision icd_section sectionHeight sectionSpacing">
+    <!-- <section class="icd__vision icd_section sectionHeight sectionSpacing">
       <div class="container smallContainer">
         <div class="row">
           <div class="icd__vision__row first">
@@ -207,6 +207,61 @@
           </div>
         </div>
       </div>
+    </section> -->
+
+    <section class="icd__vision icd_section sectionHeight sectionSpacing">
+      <div class="container smallContainer">
+        <div class="row">
+          <div class="icd__vision__row first">
+            <div class="icd__vision__wrapper">
+              <div class="icd__vision__col img">
+                <div class="icd__vision__img">
+                  <img class="icd__vision__img__desktop" src="<?php echo get_field('icd_vision_image'); ?>" alt="Our Vision">
+                  <img class="icd__vision__img__mobile" src="<?php echo get_field('icd_vision_image_mobile'); ?>" alt="Our Vision"> 
+                </div>
+              </div>
+              <div class="icd__vision__content yellow">
+                <!-- <p><?php //echo get_field('icd_vision_description'); ?></p> -->
+                <span class="icd__vision__tag"><?php echo get_field('icd_vision_subheading'); ?></span>
+                <h5>
+                  <div class="icd__vision__title"><?php echo get_field('icd_vision_title1'); ?></div>
+                  <div class="icd__vision__title"><?php echo get_field('icd_vision_title2'); ?></div>
+                  <div class="icd__vision__title"><?php echo get_field('icd_vision_title3'); ?></div>
+                  <div class="icd__vision__title"><?php echo get_field('icd_vision_title4'); ?></div>
+                </h5>
+              </div>
+            <div class="icd__vision__row second">
+              <div class="icd__vision__content green">
+                <div class="icd__vision__content__col first">
+                  <!-- <h6><?php echo get_field('icd_company_intro'); ?></h6> -->
+                </div>
+                <div class="icd__vision__content__col second">
+                  <h5><?php echo get_field('icd_mandate_heading'); ?></h5>
+                  <div class="icd__vision__desc">
+                    <p><?php echo get_field('icd_mandate_intro1'); ?></p>
+                    <p><?php echo get_field('icd_mandate_intro2'); ?></p>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <!-- <div class="icd__vision__row second">
+            <div class="icd__vision__content green">
+              <div class="icd__vision__content__col first">
+                <h6><?php echo get_field('icd_company_intro'); ?></h6>
+              </div>
+              <div class="icd__vision__content__col second">
+                <h5><?php echo get_field('icd_mandate_heading'); ?></h5>
+                <div class="icd__vision__desc">
+                  <p><?php echo get_field('icd_mandate_intro1'); ?></p>
+                  <p><?php echo get_field('icd_mandate_intro2'); ?></p>                  
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
     </section>
 
     <section class="icd__map icd_section sectionHeight sectionSpacing">
@@ -240,12 +295,12 @@
               <?php endif; ?>
             </div>
             <?php if( get_field('map_button_url') && get_field('map_button_text') ): ?>
-            <div class="icd_btn green desktop">
+            <!-- <div class="icd_btn green desktop">
               <a href="<?php echo get_field('map_button_url') ?>">
                 <span><?php echo get_field('map_button_text') ?></span>
                 <img src="/wp-content/uploads/2024/11/arrow.svg">
               </a>
-            </div>
+            </div> -->
             <?php endif; ?>
           </div>
           <div class="icd__map__col map">
