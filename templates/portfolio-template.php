@@ -27,7 +27,7 @@
             
             <!-- Page Description -->
             <div class="bottomdesc fadeaniamtion_sc">
-               <p><?php echo get_the_excerpt(); ?></p>
+               <p><?php the_content(); ?></p>
             </div>
          </div>
       </div>
@@ -39,7 +39,12 @@ if( get_field('pei_chart_setting') == 'show' ) {
  ?>
  
 <section class="paichart">
+    
+    <?php if ($current_lang == 'en') { ?>
     <div class="conntainer">
+     <?php }  else { ?>
+    <div class="container">
+       <?php } ?>
         <div class="row">
             <div class="col-md-12 piechartcol">
                 <div class="contectsec">
@@ -60,17 +65,17 @@ if( get_field('pei_chart_setting') == 'show' ) {
                 </div>
                 <?php if ($current_lang == 'en') { ?>
                 <div class="paichartimg desktop">
-                    <img src="/wp-content/uploads/2025/04/portfolioGraphEN.svg">
+                    <img src="/wp-content/uploads/2025/09/Portfolio-Breakdwon.svg">
                 </div>
                 <div class="paichartimg mobile">
-                    <img src="/wp-content/uploads/2025/04/portfolioGraphMobileEN.svg">
+                    <img src="/wp-content/uploads/2025/09/Portfolio-Breakdwon-mbl.svg">
                 </div>
                 <?php }  else { ?>
                 <div class="paichartimg desktop">
-                    <img src="/wp-content/uploads/2025/04/portfolioGraphDesktopAR.svg">
+                    <img src="/wp-content/uploads/2025/09/portfolioGraphDesktopAR-3-1-1.svg">
                 </div>
                 <div class="paichartimg mobile">
-                    <img src="/wp-content/uploads/2025/04/portfolioGraphMobileAR.svg">
+                    <img src="/wp-content/uploads/2025/09/portfolio-mobl-1.svg">
                 </div>
                 <?php } ?>
             </div>

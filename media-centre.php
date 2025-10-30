@@ -3,24 +3,31 @@
   get_header();
   $current_lang = pll_current_language(); 
 ?>
-
+<style>
+  .icd__video__sec{
+    padding-top: 0!important;
+  }
+</style>
 <?php get_template_part('template-parts/page-title'); ?>
 
 
+          <?php if( get_field('media_intro') ): ?>
 <section class="icd__organisation media__intro">
   <div class="container smallContainer">
     <div class="row">
       <div class="col-md-12">
         <div class="icd__organisation__content">
-          <?php if( get_field('media_intro') ): ?>
           <h1><?php echo get_field('media_intro') ?></h1>
-          <?php endif; ?>
         </div>
       </div>
     </div>
   </div>
 </section>
+          <?php endif; ?>
 
+          <?php
+if( get_field('press_release_display_condition') == 'show' ) {
+?>
 <section class="icd__press sectionHeight sectionSpacing">
   <div class="container smallContainer">
     <div class="row">
@@ -118,7 +125,10 @@
     </div>
   </div>
 </section>
+<?php
+}
 
+    ?>
 
 <section class="icd__video__sec sectionHeight sectionSpacing">
   <div class="container largeContainer">
@@ -132,7 +142,7 @@
                   if ($current_lang == 'en') {
                       echo pll__('Corporate Videos'); 
                   } elseif ($current_lang == 'ar') {
-                      echo pll__('مقاطع فيديو'); 
+                      echo pll__('مقاطع فيديوهات المؤسسة'); 
                   }
               ?>
             </h2>
@@ -157,9 +167,20 @@
                   $query->the_post(); 
             ?>
             <div class="video_thumb">
-              <video loop="" autoplay="" muted="" playsinline="" data-origwidth="0" data-origheight="0">
+              <?php if (has_post_thumbnail()) : ?>
+  <!-- ✅ Show featured image if available -->
+  <img 
+    src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>" 
+    alt="<?php the_title_attribute(); ?>" 
+    class="video__thumbnail" 
+  />
+<?php else : ?>
+  <!-- 🎥 Otherwise show the video -->
+<video loop="" autoplay="" muted="" playsinline="" data-origwidth="0" data-origheight="0">
                 <source class="video__link" src="<?php echo esc_url(get_field('icd_video')); ?>" type="video/mp4" style="max-width:100%;display:block;" autoplay="" muted="" loop="" preload="" playsinline="">
               </video>
+<?php endif; ?>
+
               <div class="video__content">
                 <h4><?php the_title(); ?></h4>
                 <a class="video__btn" href="#" 
@@ -223,9 +244,20 @@
                   $query->the_post(); 
             ?>
             <div class="video_thumb">
-              <video loop="" autoplay="" muted="" playsinline="" data-origwidth="0" data-origheight="0">
+              <?php if (has_post_thumbnail()) : ?>
+  <!-- ✅ Show featured image if available -->
+  <img 
+    src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>" 
+    alt="<?php the_title_attribute(); ?>" 
+    class="video__thumbnail" 
+  />
+<?php else : ?>
+  <!-- 🎥 Otherwise show the video -->
+<video loop="" autoplay="" muted="" playsinline="" data-origwidth="0" data-origheight="0">
                 <source class="video__link" src="<?php echo esc_url(get_field('icd_video')); ?>" type="video/mp4">
               </video>
+<?php endif; ?>
+              
               <div class="video__content">
                 <h4><?php the_title(); ?></h4>
                 <a class="video__btn" href="#" 

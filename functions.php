@@ -396,3 +396,29 @@ add_shortcode('pie_chart', 'pie_chart_shortcode');
 // if (function_exists('pll_register_string')) {
 //     pll_register_string('menu', 'Menu', 'your-theme-or-plugin');
 // }
+
+
+
+// Set 6 posts per page on search results
+function custom_search_results_per_page($query) {
+  if ($query->is_search() && $query->is_main_query() && !is_admin()) {
+    $query->set('posts_per_page', 6);
+  }
+}
+add_action('pre_get_posts', 'custom_search_results_per_page');
+// Increase excerpt length
+function custom_excerpt_length($length) {
+  if (is_search()) {
+    return 100; // change number as needed
+  }
+  return $length;
+}
+add_filter('excerpt_length', 'custom_excerpt_length', 999);
+
+function my_search_filter_only_selected_post_types( $query ) {
+    // Only modify the main search query on the front end
+    if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+        $query->set( 'post_type', array( 'post', 'page', 'portfolios' ) );
+    }
+}
+add_action( 'pre_get_posts', 'my_search_filter_only_selected_post_types' );

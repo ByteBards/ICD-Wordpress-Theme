@@ -24,7 +24,7 @@
               position: fixed;
               top: 0px;
               bottom: 0px;
-              display: flex;
+              display: none;
               flex-direction: column;
               align-items: center;
               justify-content: center;
@@ -129,6 +129,7 @@
                                 </div>
                             </div>
                             <div class="icd__nav_wrapper mbl_only">
+                                <span class="popup_trigger_main"><a class="popup_trigger"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32px" height="32px"><path d="M 19 3 C 13.488281 3 9 7.488281 9 13 C 9 15.394531 9.839844 17.589844 11.25 19.3125 L 3.28125 27.28125 L 4.71875 28.71875 L 12.6875 20.75 C 14.410156 22.160156 16.605469 23 19 23 C 24.511719 23 29 18.511719 29 13 C 29 7.488281 24.511719 3 19 3 Z M 19 5 C 23.429688 5 27 8.570313 27 13 C 27 17.429688 23.429688 21 19 21 C 14.570313 21 11 17.429688 11 13 C 11 8.570313 14.570313 5 19 5 Z"/></svg></a></span>
                                 <span id="icd__nav" class="icd__nav">
                                     <?php 
                                         if ($current_lang == 'en') {
@@ -152,12 +153,60 @@
                                     ?>
                                 </div>
                             </div>
+                            <!-- <a class="popup_trigger fordesktop"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32px" height="32px"><path d="M 19 3 C 13.488281 3 9 7.488281 9 13 C 9 15.394531 9.839844 17.589844 11.25 19.3125 L 3.28125 27.28125 L 4.71875 28.71875 L 12.6875 20.75 C 14.410156 22.160156 16.605469 23 19 23 C 24.511719 23 29 18.511719 29 13 C 29 7.488281 24.511719 3 19 3 Z M 19 5 C 23.429688 5 27 8.570313 27 13 C 27 17.429688 23.429688 21 19 21 C 14.570313 21 11 17.429688 11 13 C 11 8.570313 14.570313 5 19 5 Z"/></svg></a> -->
+                            <div class="popup_modal">
+                                <div class="popup_modal-content">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="icd__logo">
+                                                    <a href="<?php echo $href; ?>" class="icd__logo__link" rel="home" aria-current="page">
+                                                        <?php 
+                                                        if ($current_lang == 'en') {
+                                                            the_custom_logo();
+                                                        } elseif($current_lang == 'ar'){
+                                                            ?>
+                                                            <img class="custom-logo ar" src="/wp-content/uploads/2025/02/logo-dark-ar.png" alt="ICD Logo">
+                                                            <?php
+                                                        } 
+
+                                                        else {
+                                                            echo '<span class="icd__logo__text">' . get_bloginfo('name') . '</span>';
+                                                        }
+                                                        ?>
+                                                        <a href="<?php echo $href; ?>" class="icd__logo__link" rel="home" aria-current="page">
+                                                            <img class="mobile_logo" src="/wp-content/uploads/2025/02/Mobile-ICD.svg" alt="ICD Logo">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-6"><span class="popup_close-button"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+<path d="M1.03345 17.3843L17.5195 0.898244" stroke="#003142" stroke-miterlimit="10"/>
+<path d="M1.04077 0.898682L17.5268 17.3847" stroke="#003142" stroke-miterlimit="10"/>
+</svg></span></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="searchfrom">
+                                                    <?php get_search_form(); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
+
+
+    <?php if ( is_front_page() || is_home() ) : ?>
+ 
+<?php endif; ?>
+
     <!--========================= HEADER (END) =========================-->
     <div id="smooth-wrapper">
     <div id="smooth-content">

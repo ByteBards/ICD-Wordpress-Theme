@@ -71,7 +71,7 @@ $(document).ready(function() {
     });
   });
 
-  const elements = ['.icd__groups__tag', '.total__assets__box', '.total__revenue__box'];
+  const elements = ['.icd__groups__tag', '.total__assets__box', '.total__revenue__box', '.total__employee__box'];
   elements.forEach((selector, index) => {
     gsap.from(selector, {
       scrollTrigger: {
@@ -138,7 +138,7 @@ $(document).ready(function() {
     });
   });
 
-  const contactElements2 = ['.portfoliohero .topheading', '.portfoliohero .middleimg', '.portfoliohero .bottomdesc', '.megnaticsec .ct_inner span:nth-child(1)', '.megnaticsec .ct_inner span:nth-child(2)', '.megnaticsec .ct_inner span:nth-child(3)'];
+  const contactElements2 = ['.portfoliohero .topheading', '.portfoliohero .middleimg', '.portfoliohero .bottomdesc', '.megnaticsec .ct_inner span:nth-child(1)', '.megnaticsec .ct_inner span:nth-child(2)', '.megnaticsec .ct_inner span:nth-child(3)', '.megnaticsec .ct_inner span:nth-child(4)', '.megnaticsec .ct_inner span:nth-child(5)'];
   contactElements2.forEach((selector, index) => {
     gsap.from(selector, {
       scrollTrigger: {
@@ -154,7 +154,7 @@ $(document).ready(function() {
     });
   });
 
-const contactElements3 = ['.financialreprtsec', '.tr-tabssec', '.tabscontentrow', '.piegraph-row', '.col-md-10.pgr-scnd .piechartmainfr', '.pcm_mbile'];
+const contactElements3 = ['.financialreprtsec', '.tr-tabssec', '.tabscontentrow', '.piegraph-row', '.col-md-10.pgr-scnd .piechartmainfr', '.pcm_mbile', '.bargraph-row'];
 contactElements3.forEach((selector, index) => {
   gsap.from(selector, {
     scrollTrigger: {
@@ -208,73 +208,96 @@ visionElements.forEach((selector, index) => {
     });
   }
 
-  // GRAPH (Financial Highlights & Analysis)
+ // GRAPH (Financial Highlights & Analysis)
 const graphContainers = document.querySelectorAll('.graph-container');
 
-graphContainers.forEach((container, index) => {
+graphContainers.forEach((container) => {
   // ✅ Get values + years (expects JSON with {values:[], years:[]})
   let raw = container.querySelector('.graph').dataset.values;
   let parsed = JSON.parse(raw);
 
   let values = parsed.values.map(v => parseFloat(v.replace(/,/g, '')));
-  let years  = parsed.years || [];
+  let years = parsed.years || [];
 
   // ✅ Build bars dynamically (wrap bar + year inside bar-wrapper)
   const graph = container.querySelector('.graph');
-  const max = Math.max(...values);
-  graph.innerHTML = values.map((val, i) => `
-    <div class="bar" style="height: ${(val / max) * 100}%;">
-      <span>${val.toLocaleString()}</span>
-      <div class="bar-year">${years[i] || ''}</div>
-    </div>
-  `).join('');
+  const max = Math.max(...values.map(v => Math.abs(v))); // use absolute for scaling
 
-  // Animate container
-  gsap.from(container, {
-    scrollTrigger: {
-      trigger: container,
-      start: 'top 80%',
-      toggleActions: 'play none none none',
-    },
-    opacity: 0,
-    y: 100,
-    duration: 1.5,
-    delay: index * 0.2,
-    ease: 'power2.out',
+  graph.innerHTML = values.map((val, i) => {
+    const heightPercent = (Math.abs(val) / max) * 100;
+    const barClass = val < 0 ? 'bar negative' : 'bar'; // ✅ add negative class if value < 0
+    return `
+      <div class="${barClass}" style="height: ${heightPercent}%; position: relative;">
+        <span>${val.toLocaleString()}</span>
+        <div class="bar-year">${years[i] || ''}</div>
+      </div>
+    `;
+  }).join('');
+});
+
+// ✅ Handle negative bars & padding
+setTimeout(() => {
+  const allGraphs = document.querySelectorAll('.graph-container .graph');
+  let largestNegativeHeight = 0;
+
+  allGraphs.forEach(graph => {
+    const bars = graph.querySelectorAll('.bar.negative');
+    bars.forEach(bar => {
+      const height = bar.offsetHeight; // actual pixel height
+      console.log('Negative bar height (px):', height);
+      bar.style.position = 'relative';
+      bar.style.bottom = `-${height + 10}px`; // move below baseline
+      if (height > largestNegativeHeight) {
+        largestNegativeHeight = height;
+      }
+    });
   });
 
-  // Animate bars
-  const bars = container.querySelectorAll('.bar');
-  gsap.from(bars, {
-    scrollTrigger: {
-      trigger: container,
-      start: 'top 80%',
-      toggleActions: 'play none none none',
-    },
-    opacity: 0,
-    y: 100,
-    stagger: 0.1,
-    duration: 1,
-    ease: 'power2.out',
-  });
-
-  // Animate graph value if exists
-  const graphValue = container.querySelector('.graph-value');
-  if (graphValue) {
-    gsap.from(graphValue, {
-      scrollTrigger: {
-        trigger: container,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-      },
-      opacity: 0,
-      y: 50,
-      duration: 1,
-      delay: 0.5,
-      ease: 'power2.out',
+  // ✅ Apply maximum bottom padding across all graphs
+  if (largestNegativeHeight > 0) {
+    allGraphs.forEach(graph => {
+      graph.style.paddingBottom = `${largestNegativeHeight + 10}px`;
     });
   }
-});
+
+  console.log('Largest negative height applied (px):', largestNegativeHeight);
+}, 400);
+
+
+// ✅ NEW FUNCTIONALITY — Handle negative values visually (AFTER all graphs rendered)
+setTimeout(() => {
+  const allGraphs = document.querySelectorAll('.graph-container .graph');
+  let largestNegativeHeight = 0;
+
+  allGraphs.forEach(graph => {
+    const graphHeight = graph.clientHeight; // e.g. 150px
+    const bars = graph.querySelectorAll('.bar.negative');
+    bars.forEach(bar => {
+      const height = bar.offsetHeight; // actual pixel height
+      
+      const heightss = bar.getBoundingClientRect().height; 
+      const heightPercent = parseFloat(bar.style.height); 
+      const heightPx = (graphHeight * heightPercent) / 100; 
+      console.log('height', height); 
+      console.log('heightss', heightss); 
+      console.log('heightPercent', heightPercent); 
+      console.log('heightPx', heightPx); 
+      console.log('graphHeight', graphHeight); 
+      bar.style.position = 'relative';
+      bar.style.bottom = `-${height + 10}px`; // move below baseline
+      if (height > largestNegativeHeight) {
+        largestNegativeHeight = height;
+      }
+    });
+  });
+
+  // ✅ Add max bottom padding to ALL graphs
+  if (largestNegativeHeight > 0) {
+    allGraphs.forEach(graph => {
+      graph.style.paddingBottom = `${largestNegativeHeight + 10}px`;
+    });
+  }
+}, 400);
 
 
   // CORPORATE SOCIAL FAQS
@@ -969,18 +992,18 @@ gsap.to(".total__assets__box__bg img", {
     markers: false,
   }
 });
-gsap.to(".total__revenue__box__bg img", {
-  xPercent: -30,
-  opacity: 0.6,
-  ease: "power1.out",
-  scrollTrigger: {
-    trigger: ".total__revenue__box__bg",
-    start: "top bottom",
-    end: "bottom top",
-    scrub: true,
-    markers: false,
-  }
-});
+// gsap.to(".total__revenue__box__bg img", {
+//   xPercent: -30,
+//   opacity: 0.6,
+//   ease: "power1.out",
+//   scrollTrigger: {
+//     trigger: ".total__revenue__box__bg",
+//     start: "top bottom",
+//     end: "bottom top",
+//     scrub: true,
+//     markers: false,
+//   }
+// });
 
  gsap.to(".mainrow", {
     backgroundPosition: "-150px", // End position in pixels
@@ -1027,7 +1050,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.to(ceoImage, {
         scrollTrigger: {
           trigger: ceoImage,
-          start: 'top 120px',
+          start: 'top 60px',
           end: () => `+=${ceoMessage.offsetHeight}`,
           pin: true,
           scrub: true,
@@ -1079,4 +1102,154 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+});
+
+
+(function ($) {
+  $(function () {
+    // CONFIG
+    const headerSelector = '.icd__header__wrapper'; // change if needed
+    const mobileBreakpoint = 1024; // <= this treated as "mobile" (no smoother). Adjust to taste.
+    const smootherCreateOptions = { smooth: 2, effects: true, smoothTouch: 0.1 };
+
+    // helpers
+    function getHeaderOffset() {
+      const $h = $(headerSelector);
+      return $h.length ? $h.outerHeight(true) : 0;
+    }
+    function isMobileWidth() {
+      return window.innerWidth <= mobileBreakpoint;
+    }
+
+    // try to get or create smoother, but do not force using it on mobile
+    let smoother = null;
+    try {
+      if (typeof ScrollSmoother !== 'undefined') {
+        smoother = ScrollSmoother.get() || ScrollSmoother.create(smootherCreateOptions);
+      }
+    } catch (err) {
+      console.warn('ScrollSmoother init error:', err);
+      smoother = null;
+    }
+
+    // decide whether to use smoother for current viewport
+    function shouldUseSmoother() {
+      return !!smoother && !isMobileWidth();
+    }
+
+    // compute max scroll fallback
+    function getMaxScroll() {
+      if (typeof ScrollTrigger !== 'undefined' && typeof ScrollTrigger.maxScroll === 'function') {
+        return ScrollTrigger.maxScroll(window);
+      }
+      return document.documentElement.scrollHeight - window.innerHeight;
+    }
+
+    // main scroll fn: uses smoother if allowed, else uses native/jQuery
+    function smoothScrollTo(targetIdOrHash) {
+      if (!targetIdOrHash) return;
+      const id = targetIdOrHash.startsWith('#') ? targetIdOrHash : `#${targetIdOrHash}`;
+      const targetEl = document.querySelector(id);
+      if (!targetEl) return;
+
+      const headerOffset = getHeaderOffset();
+
+      if (shouldUseSmoother()) {
+        // use ScrollSmoother.offset with dynamic offset
+        const offsetStr = `top ${headerOffset}px`;
+        let targetPos;
+        try {
+          targetPos = smoother.offset(targetEl, offsetStr);
+        } catch (err) {
+          // fallback compute if offset() fails
+          targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        }
+        const maxScroll = getMaxScroll();
+        gsap.to(smoother, {
+          scrollTop: Math.min(maxScroll, targetPos),
+          duration: 0.9,
+          ease: 'power2.out',
+          onComplete: () => { if (window.ScrollTrigger && typeof ScrollTrigger.refresh === 'function') ScrollTrigger.refresh(); }
+        });
+      } else {
+        // native fallback (mobile or no smoother)
+        const top = Math.max(0, targetEl.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+        if ('scrollBehavior' in document.documentElement.style) {
+          window.scrollTo({ top, behavior: 'smooth' });
+          setTimeout(() => { if (window.ScrollTrigger && typeof ScrollTrigger.refresh === 'function') ScrollTrigger.refresh(); }, 850);
+        } else {
+          $('html,body').animate({ scrollTop: top }, 700, function () {
+            if (window.ScrollTrigger && typeof ScrollTrigger.refresh === 'function') ScrollTrigger.refresh();
+          });
+        }
+      }
+    }
+
+    // handle anchor clicks globally
+    $(document).on('click', 'a[href*="#"]', function (e) {
+      const href = $(this).attr('href');
+      if (!href || href === '#' || href.startsWith('javascript:')) return;
+
+      let url;
+      try { url = new URL(href, location.href); } catch (err) { return; }
+
+      const hash = url.hash; // includes leading '#'
+      if (!hash) return;
+
+      const linkPath = (url.pathname || '/').replace(/\/$/, '');
+      const currentPath = (location.pathname || '/').replace(/\/$/, '');
+
+      // same-page anchor => intercept
+      if (linkPath === currentPath) {
+        e.preventDefault();
+        smoothScrollTo(hash);
+        // update URL (push so back button works if you prefer)
+        if (history.pushState) history.pushState(null, '', hash);
+        else location.hash = hash;
+      } // else: different page -> allow native navigation (auto-scroll on load handled below)
+    });
+
+    // on load: auto-scroll if page was opened with a hash
+    $(window).on('load', function () {
+      const hash = location.hash;
+      if (hash && document.querySelector(hash)) {
+        // prevent browser instant jump
+        window.scrollTo(0, 0);
+        // delay slightly to allow smoother/init to settle
+        setTimeout(() => smoothScrollTo(hash), 350);
+      }
+    });
+
+    // respond to hashchange as well
+    $(window).on('hashchange', function () {
+      const hash = location.hash;
+      if (hash && document.querySelector(hash)) {
+        smoothScrollTo(hash);
+      }
+    });
+
+    // if user resizes across mobile/desktop breakpoint, refresh scroll behavior
+    // (important if they rotate device or resize browser)
+    let _resizeTimer;
+    $(window).on('resize', function () {
+      clearTimeout(_resizeTimer);
+      _resizeTimer = setTimeout(function () {
+        // if smoother exists but we moved to mobile, optionally kill it (or leave)
+        // here we simply refresh ScrollTrigger and update smoother reference
+        if (typeof ScrollSmoother !== 'undefined') {
+          smoother = ScrollSmoother.get() || smoother;
+        }
+        if (window.ScrollTrigger && typeof ScrollTrigger.refresh === 'function') ScrollTrigger.refresh();
+      }, 250);
+    });
+  });
+})(jQuery);
+
+window.addEventListener('scroll', function() {
+  const video = document.querySelector('wistia-player#hero__video');
+  const muteBtn = document.querySelector('.videomutbtn-main a#muteToggleBtn');
+  if (!video || !muteBtn) return;
+
+  const widthVw = (video.offsetWidth / window.innerWidth) * 100;
+  muteBtn.classList.toggle('active', widthVw >= 90);
 });

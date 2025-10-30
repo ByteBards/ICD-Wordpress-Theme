@@ -13,7 +13,14 @@
         $href = '/our-portfolio';
     }
 ?>
-
+<style>
+    html[lang="ar"] .content-5-4-3 h2.hmss-i-nam.\35 {
+    display: ruby !important;
+}
+html[lang="ar"] .content-5-4-3 h2.hmss-i-nam span.mainsymblol {
+    padding-right: 5px;
+}
+</style>
 <section class="singlebanner">
    <div class="container toprow smallContainer">
       <div class="row">
@@ -137,12 +144,19 @@
                             <?php 
                             $counter = 1; // Initialize the counter
                             while (have_rows('multiple_services')) : the_row(); 
-                                $service_name = get_sub_field('mult_service_name'); // Get the subfield value
+                                $service_name = get_sub_field('mult_service_name'); 
+                                $service_name_top = get_sub_field('top_mult_service_name'); 
                             ?>
                                 <li>
                                     <a href="javascript:void(0)" class="service-link" data-target="service-<?php echo $counter; ?>">
                                         <span><?php echo $counter++; ?>.</span> <!-- Display the counter -->
-                                        <?php echo esc_html($service_name); ?> <!-- Display the service name -->
+                                        <?php 
+                                         if($service_name_top){
+                                            echo esc_html($service_name_top);
+                                         }else{
+                                            echo esc_html($service_name);
+                                         }
+                                         ?> <!-- Display the service name -->
                                         <img src="/wp-content/uploads/2024/11/arrowdown.svg" alt="">
                                     </a>
                                 </li>
@@ -169,7 +183,7 @@
                     if ($current_lang == 'en') {
                         echo pll__('Segment Contribution'); 
                     } elseif ($current_lang == 'ar') {
-                        echo pll__('مساهمة القطاعات'); 
+                        // echo pll__('مساهمة القطاعات'); 
                     }
                 ?>
                 <br>
@@ -177,7 +191,7 @@
                     if ($current_lang == 'en') {
                         echo pll__('to the Group'); 
                     } elseif ($current_lang == 'ar') {
-                        echo pll__('في المجموعة'); 
+                        // echo pll__('في المجموعة'); 
                     }
                 ?>
                 </h3>
@@ -298,16 +312,16 @@ if ( get_field('select_type') == 'sin_ser' ) {
                          aria-labelledby="tab-<?php echo $content_index; ?>">
                         <div class="tabsinner">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-5 tabsinnercol-left">
                                     <div class="holderimg">
                                         <img src="<?php echo esc_url($holder_image); ?>" alt="<?php echo esc_attr($holder_name); ?>">
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-7 tabsinnercol-right">
                                     <div class="holdercontent">
                                         <div class="holdercontent__wrapper">
                                             <div class="hc-top">
-                                                <div class="holderlogo">
+                                                <div class="holderlogo 1">
                                                     <img src="<?php echo esc_url(get_sub_field('sng_holder_logo')); ?>" alt="<?php echo esc_attr($holder_name); ?>">
                                                 </div>
                                                 <div class="holderlink">
@@ -318,55 +332,8 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                 <?php echo wp_kses_post($holder_description); ?>
                                             </div>
                                         </div>
-                                        <div class="hc-bottom">
-                                            <div class="holdermarketshare mb-5">
-                                                <div class="hms-head">
-                                                    <?php 
-                                                    if($market_share_date && !$separate_market_share_table){
-                                                    ?>
-                                                    <h3> 
-                                                    <?php 
-                                                        if ($current_lang == 'en') {
-                                                            echo pll__('UAE Market Share'); 
-                                                        } elseif ($current_lang == 'ar') {
-                                                            echo pll__('الحصة السوقية في الإمارات العربية المتحدة'); 
-                                                        }
-                                                    ?>
-                                                        <span class="date">( 
-                                                            <?php 
-                                                                if ($current_lang == 'en') {
-                                                                    echo pll__('as of'); 
-                                                                } elseif ($current_lang == 'ar') {
-                                                                    echo pll__('كما في'); 
-                                                                }
-                                                            ?>
-                                                            <?php
-                                                                if ($current_lang == 'en') {
-                                                                    $translated_date = $market_share_date;
-                                                                } elseif ($current_lang == 'ar') {
-                                                                    $months = array(
-                                                                        'January' => 'يناير',
-                                                                        'February' => 'فبراير',
-                                                                        'March' => 'مارس',
-                                                                        'April' => 'أبريل',
-                                                                        'May' => 'مايو',
-                                                                        'June' => 'يونيو',
-                                                                        'July' => 'يوليو',
-                                                                        'August' => 'أغسطس',
-                                                                        'September' => 'سبتمبر',
-                                                                        'October' => 'أكتوبر',
-                                                                        'November' => 'نوفمبر',
-                                                                        'December' => 'ديسمبر',
-                                                                    );
-                                                                    $translated_date = str_replace(array_keys($months), array_values($months), $market_share_date);
-                                                                }
-                                                                echo $translated_date;
-                                                            ?>
-                                                        )</span></h3>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </div>
+                                        <div class="hc-bottom 1">
+                                            <div class="holdermarketshare">
                                                 <div class="row hms-shares">
                                                     <?php if (have_rows('sng_market_share')) :
                                                         while (have_rows('sng_market_share')) : the_row();
@@ -377,13 +344,14 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                             $value_inner_child = get_sub_field('value_child_optional');
                                                             $child_entries = get_sub_field('child_entries');
                                                             $full_width = get_sub_field('full_width');
-                                                            $inline_label = get_sub_field('inline_label')
+                                                            $inline_label = get_sub_field('inline_label');
+                                                            $label_reverse = get_sub_field('inline_label_reverse');
                                                             ?>
                                                             <div class="<?= $full_width ? 'col-md-12' : 'col-md-6' ?> <?= $type_inner ? '' : 'empty-entry' ?>">
-                                                                <div class="hms-s-inner <?php if ($child_entries) { echo "flex-column"; } ?> <?= $full_width ? 'full-width-col' : 'half-width-col' ?>">
+                                                                <div class="hms-s-inner <?php if ($child_entries) { echo "flex-column"; } ?> <?= $full_width ? 'full-width-col' : 'half-width-col' ?> <?php if ($label_reverse) { echo "label_reverse-main"; }?>">
                                                                     <?php if ($child_entries) { ?>
                                                                         <div class="parent-entries pb-2 d-flex w-100">
-                                                                            <h2 class="hmss-i-nam"><b> <?php echo $type_inner; ?></b> &nbsp;<?php if ( ! $full_width ) : ?>
+                                                                            <h2 class="hmss-i-nam 1"><b> <?php echo $type_inner; ?></b> &nbsp;<?php if ( ! $full_width ) : ?>
                                                                                 <?php echo esc_html( $value_inner_child ); ?>
                                                                             <?php endif; ?>
                                                                              </h2>
@@ -397,16 +365,18 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                                                 $child_value_inner_unit = get_sub_field('child_sng_area_unit');
                                                                                 $child_value_inner_child = get_sub_field('child_value_child_optional');
                                                                                 ?>
-                                                                              <div class="child-entry-item pb-2 d-flex w-100">
-                                                                                  <h2 class="hmss-i-nam">- <?php echo esc_html($child_type_inner); ?></h2>
-                                                                                   <h2 class="hmss-i-valu"><span><b><?php echo esc_html($child_value_inner); ?></b> <?php echo esc_html($child_value_inner_unit); ?></span>&nbsp;<span class="smallchild"><?php echo esc_html($child_value_inner_child); ?></span></h2>
+                                                                              <div class="child-entry-item pb-0 d-flex w-100">
+                                                                                  <h2 class="hmss-i-nam 2"><span class="hssn-dot">-</span> <?php echo esc_html($child_type_inner); ?><?php if($child_value_inner_child){ ?><span class="smallchild">(<?php echo esc_html($child_value_inner_child); ?>)</span><?php } ?></h2>
+                                                                                   <h2 class="hmss-i-valu"><span><b><?php echo esc_html($child_value_inner); ?></b> <?php echo esc_html($child_value_inner_unit); ?></span></h2>
                                                                               </div>
                                                                             <?php endwhile;
                                                                             endif; ?>
                                                                         </div>
                                                                     <?php } else { ?>
-                                                                        <h2 class="hmss-i-nam"><b><?php echo $type_inner; ?></b> &nbsp;<?php if (!$full_width && ($value_inner_child == "(AED)")) {  echo esc_html($value_inner_child);  } ?></h2>
-                                                                        <h2 class="hmss-i-valu"><span><b><?php echo esc_html($value_inner); ?></b> <?php echo esc_html($value_inner_unit); ?></span>&nbsp;<span class="<?php if ($inline_label) { echo "Inline-label"; }?>" ><?php if ($full_width || ($value_inner_child != "(AED)")) {  echo esc_html($value_inner_child);  } ?></span></h2>
+                                                                        <h2 class="hmss-i-nam 3 <?php if ($inline_label) { echo "inline-label-nam"; }?>"><b><?php echo $type_inner; ?></b> <?php if ($value_inner_child && !$inline_label) { ?>
+                                                                            <span class="mainsymblol">(<?php if ($value_inner_child === 'AED' || $value_inner_child === 'د.إ') { echo '<span class="dirham-symbol">ê</span>'; } else {echo $value_inner_child;}?>)</span> <?php } ?>
+                                                                        </h2>
+                                                                        <h2 class="hmss-i-valu <?php if ($inline_label) { echo "inline-label-valu"; }?>"><span><b><?php echo esc_html($value_inner); ?></b><?php echo $value_inner_unit; ?></span><span class="<?php if ($inline_label) { echo "Inline-label"; }?>" ><?php if ($full_width && $inline_label) {  echo esc_html($value_inner_child);  } ?></span></h2>
                                                                     <?php } ?>
                                                                 </div>
                                                             </div>
@@ -420,7 +390,7 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                     if($separate_market_share_table && $uae_sng_market_share){
                                                     ?>
                                             <div class="holdermarketshare uae-share-table">
-                                                <div class="hms-head">
+                                                <div class="hms-head 2">
                                                     <?php 
                                                     if($separate_market_share_table){
                                                     ?>
@@ -477,8 +447,8 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                             ?>
                                                             <div class="col-md-4">
                                                                 <div class="hms-s-inner">
-                                                                    <h2 class="hmss-i-nam"><b><?php echo esc_html($type_inner); ?></b></h2>
-                                                                    <h2 class="hmss-i-valu"><span><b><?php echo esc_html($value_inner); ?></b> <?php echo esc_html($value_inner_unit); ?></span><span class="smallchild"></span></h2>
+                                                                    <h2 class="hmss-i-nam 4"><b><?php echo esc_html($type_inner); ?></b></h2>
+                                                                    <h2 class="hmss-i-valu"><span><b><?php echo esc_html($value_inner); ?></b><?php echo esc_html($value_inner_unit); ?></span><span class="smallchild"></span></h2>
                                                                 </div>
                                                             </div>
                                                         <?php endwhile;
@@ -560,7 +530,7 @@ if ( get_field('select_type') == 'sin_ser' ) {
 
 
 
-<section class="sp-accor">
+<section class="sp-accor single-portfolio-accordion">
     <div class="container smallContainer">
         <div class="row">
             <div class="col-md-12">
@@ -694,6 +664,8 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                         $holder_name = get_sub_field('mult_holder_name');
                                                         $holder_desc = get_sub_field('mult_holder_description');
                                                         $holder_image = get_sub_field('mult_holder_image');
+                                                        $holder_logo = get_sub_field('mult_holder_logo');
+                                                        $holder_url = get_sub_field('mult_holder_url_');
                                                         $market_share_date = get_sub_field('mult_market_share_date');
                                                     ?>
                                                         <div class="tab-pane fade <?php echo $content_counter == 1 ? 'show active' : ''; ?>" id="content-<?php echo $content_counter; ?>-<?php echo $counter; ?>" role="tabpanel">
@@ -703,31 +675,31 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                         ?>    
                                                         <div class="tabsinner">
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-5 tabsinnercol-left">
                                                                         <div class="holderimg">
                                                                             <img src="<?php echo esc_url($holder_image); ?>" alt="">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-8">
-                                                                        <div class="holdercontent">
+                                                                    <div class="col-md-7 tabsinnercol-right">
+                                                                        <div class="holdercontent <?php if( !have_rows('mult_market_share') ): ?>nomarketshare<?php endif; ?>">
                                                                             <div class="holdercontent__wrapper">
                                                                                 <div class="hc-top">
-                                                                                    <div class="holderlogo">
-                                                                                        <img src="<?php echo esc_url(get_sub_field('mult_holder_logo')); ?>" alt="">
+                                                                                    <div class="holderlogo 2">
+                                                                                        <img src="<?php echo esc_url($holder_logo); ?>" alt="">
                                                                                     </div>
                                                                                     
                                                                                     <div class="holderlink">
-                                                                                        <a href="<?php echo esc_url(get_sub_field('mult_holder_url_')); ?>" target="_blank"><img src="/wp-content/uploads/2024/11/arrowrht.svg" alt="Link"></a>
+                                                                                        <a href="<?php echo wp_kses_post($holder_url); ?>" target="_blank"><img src="/wp-content/uploads/2024/11/arrowrht.svg" alt="Link"></a>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="hc-desc">
                                                                                     <p><?php echo wp_kses_post($holder_desc); ?></p>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="hc-bottom">
                                                                             <?php if( have_rows('mult_market_share') ): ?>
+                                                                            <div class="hc-bottom 2">
                                                                                 <div class="holdermarketshare">
-                                                                                    <div class="hms-head">
+                                                                                    <div class="hms-head 3">
                                                                                     <?php 
                                                                                         if($market_share_date){
                                                                                         ?>
@@ -775,25 +747,27 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                                                         ?>
                                                                                     </div>
                                                                                     <div class="row hms-shares <?= $holder_name == "Emaar Properties" ? "emaar" : "" ?>">
-                                                                                        <?php while( have_rows('mult_market_share') ): the_row(); 
+                                                                                        <?php 
+                                                                                        $c_top = 1;
+                                                                                        while( have_rows('mult_market_share') ): the_row(); 
                                                                                             $type = get_sub_field('mult_type_inner');
                                                                                             $value = get_sub_field('mult_value_inner');
                                                                                             $value_unit = get_sub_field('mult_value_unit');
                                                                                             $value_child = get_sub_field('mult_value_child_optional');
                                                                                             $full_width = get_sub_field('full_width');
+                                                                                            $mult_value_inline = get_sub_field('mult_value_inline');
                                                                                         ?>
-                                                                                            <div class="<?= $full_width ? 'col-md-12' : 'col-md-6' ?>">
+                                                                                            <div class="<?= $full_width ? 'col-md-12' : 'col-md-6' ?> content-<?php echo $content_counter; ?>-<?php echo $counter; ?>-<?php echo $c_top; ?>">
                                                                                                 <div class="hms-s-inner <?php if ($child_entries) { echo "flex-column"; } ?> <?= $full_width ? 'full-width-col' : 'half-width-col' ?>">
-                                                                                                    <h2 class="hmss-i-nam"><b><?php echo $type; ?></b> </h2>
-                                                                                                    <h2 class="hmss-i-valu"><span><b><?php echo esc_html($value); ?></b> <?php echo esc_html($value_unit); ?></span>&nbsp;<span><?php if ($value_child) {?>
-                                                                                                    <?php echo esc_html($value_child); ?> <?php } ?></span></h2>
+                                                                                                    <h2 class="hmss-i-nam 5"><b><?php echo $type; ?></b><?php if($mult_value_inline){ ?><span class="mainsymblol">(<?php if ($value_child === 'AED' || $value_child === 'د.إ') { echo '<span class="dirham-symbol">ê</span>'; } else { echo $value_child; }?>)</span><?php } ?></h2>
+                                                                                                    <h2 class="hmss-i-valu"><span><b><?php echo esc_html($value); ?></b><?php echo esc_html($value_unit); ?></span><?php if ($value_child && !$mult_value_inline) {?><span>&nbsp;<?php echo $value_child; ?> </span><?php } ?></h2>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        <?php endwhile; ?>
+                                                                                        <?php $c_top++;  endwhile; ?>
                                                                                     </div>
                                                                                 </div>
-                                                                            <?php endif; ?>
                                                                             </div>
+                                                                            <?php endif; ?>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -804,16 +778,16 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                         ?> 
                                                         <div class="tabsinner child-services-tbinner">
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-5 tabsinnercol-left">
                                                                         
                                                                         <div class="holderimg">
                                                                             <img src="<?php echo esc_url($holder_image); ?>" alt="">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-md-7 tabsinnercol-right">
                                                                         <div class="holdercontent holdercontent-right">
                                                                             <div class="hc-top">
-                                                                                <div class="holderlogo">
+                                                                                <div class="holderlogo 3">
                                                                                     <img src="<?php echo esc_url(get_sub_field('mult_holder_logo')); ?>" alt="">
                                                                                 </div>
                                                                                 
@@ -832,6 +806,7 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                                             ?>
                                                                             <?php while( have_rows('multi_sercives_childs') ): the_row(); 
                                                                                 $sc_logo = get_sub_field('msc_logo');
+                                                                                $sc_url = get_sub_field('msc_url');
                                                                                 $sc_heading = get_sub_field('msc_heading');
                                                                                 $sc_description = get_sub_field('msc_description');
                                                                             ?>
@@ -839,33 +814,39 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                                                                 <div class="holdercontent holdercontent-right">
                                                                                     <div class="holdercontent__wrapper">
                                                                                         <div class="hc-top collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $c; ?>" aria-expanded="true" aria-controls="collapse<?php echo $c; ?>">
-                                                                                            <div class="holderlogo">
+                                                                                            <div class="holderlogo holderlogochilds">
                                                                                                 <img src="<?php echo esc_url(get_sub_field('msc_logo')); ?>" alt="">
+                                                                                            </div>
+                                                                                            <div class="holderlink">
+                                                                                                <a href="<?php echo $sc_url; ?>" target="_blank"><img src="/wp-content/uploads/2024/11/arrowrht.svg" alt="Link"></a>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div id="collapse<?php echo $c; ?>" class="hc-bottom accordion-collapse collapse" aria-labelledby="heading<?php echo $c; ?>" data-bs-parent="#holderchildrens">
+                                                                                    <div id="collapse<?php echo $c; ?>" class="hc-bottom 3 accordion-collapse collapse" aria-labelledby="heading<?php echo $c; ?>" data-bs-parent="#holderchildrens">
                                                                                         <div class="hc-desc">
                                                                                             <p><?php echo wp_kses_post($sc_description); ?></p>
                                                                                         </div>
-                                                                                    <?php if( have_rows('mult_market_share_child') ): ?>
+                                                                                    <?php if( have_rows('mult_market_share_child') ):
+                                                                                        $c_inner = 1;
+                                                                                         ?>
                                                                                         <div class="holdermarketshare">
                                                                                             <div class="row hms-shares">
                                                                                                 <?php while( have_rows('mult_market_share_child') ): the_row(); 
                                                                                                     $type_sc = get_sub_field('mult_type_inner_sc');
+                                                                                                    $type_child_sc = get_sub_field('mult_type_child_inner_sc');
                                                                                                     $value_sc = get_sub_field('mult_value_inner_sc');
                                                                                                     $value_unit_sc = get_sub_field('mult_value_unit_sc');
                                                                                                     $value_child_sc = get_sub_field('mult_value_child_optional_sc');
                                                                                                 ?>
-                                                                                                    <div class="col-md-6">
+                                                                                                    <div class="col-md-6 content-<?php echo $content_counter; ?>-<?php echo $counter; ?>-<?php echo $c; ?>-<?php echo $c_inner; ?>">
                                                                                                         <div class="hms-s-inner">
-                                                                                                            <h2 class="hmss-i-nam"><b><?php echo $type_sc; ?></b>  <?php if ($value_child_sc == "(AED)") {?>
-                                                                                                            <?php echo esc_html($value_child_sc); ?><?php } ?></h2>
-                                                                                                            <h2 class="hmss-i-valu"><span><b><?php echo esc_html($value_sc); ?></b> <?php echo esc_html($value_unit_sc); ?></span>&nbsp;<span><?php if ($value_child_sc != "(AED)") {?>
-                                                                                                            <?php echo esc_html($value_child_sc); ?><?php } ?></span></h2>
+                                                                                                            <h2 class="hmss-i-nam six6"><b><?php echo $type_sc; ?></b>  <?php if ($value_child_sc) {?>
+                                                                                                            (<?php echo esc_html($value_child_sc); ?>)<?php } ?><?php if ($type_child_sc) {?>
+                                                                                                            <span style="width: 100%;"><?php echo esc_html($type_child_sc); ?></span><?php } ?></h2>
+                                                                                                            <h2 class="hmss-i-valu"><span><b><?php echo esc_html($value_sc); ?></b><?php echo esc_html($value_unit_sc); ?></span></h2>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                <?php endwhile; ?>
+                                                                                                <?php $c_inner++;  endwhile; ?>
                                                                                             </div>
                                                                                         </div>
                                                                                     <?php endif; ?>
@@ -976,23 +957,82 @@ if ( get_field('select_type') == 'sin_ser' ) {
 <script>
     $(document).ready(function () {
         // Scroll and open the accordion when a service name is clicked
-        $('.service-link').click(function () {
-            var target = $(this).data('target'); // Get the target ID
-            var targetElement = $('#' + target);
+// keep your manual click handler as-is (do not remove)
+// $('.icd__org__faq__parent .accordion__icon .plusminus').click(...)
 
-            if (targetElement.length) {
-                // Smooth scroll to the target element
-                $('html, body').animate({
-                    scrollTop: targetElement.offset().top - 50 // Adjust offset for header height
-                }, 800, function () {
-                    // Open the accordion
-                    var plusButton = targetElement.find('.plus');
-                    if (plusButton.is(':visible')) {
-                        plusButton.click();
-                    }
-                });
-            }
-        });
+// Auto-open logic (safe, only runs for the auto case)
+(function(){
+  var autoClickTimer = null;
+
+  $('.service-link').on('click', function(e) {
+    e.preventDefault(); // avoid default anchor jump
+    // clear any previous scheduled auto-open
+    if (autoClickTimer) {
+      clearTimeout(autoClickTimer);
+      autoClickTimer = null;
+    }
+
+    var target = $(this).data('target');
+    var $targetElement = $('#' + target);
+
+    if (!$targetElement.length) return;
+
+    // Smooth scroll to target
+    $('html, body').animate({
+      scrollTop: $targetElement.offset().top - 50
+    }, 100, function() {
+
+      // schedule auto open after 3s
+      autoClickTimer = setTimeout(function() {
+
+        // try to find the plusminus inside the target block (robust)
+        var $plus = $targetElement.find('.icd__org__faq__parent .accordion__icon .plusminus');
+
+        // fallback selectors if needed
+        if (!$plus.length) $plus = $targetElement.find('.plusminus');
+
+        if (!$plus.length) {
+          autoClickTimer = null;
+          return;
+        }
+
+        // If already active, ensure content is visible and classes in place,
+        // otherwise perform the open actions exactly as manual click would.
+        if (!$plus.hasClass('active')) {
+          $plus.addClass('active'); // ensure .active is added (auto case)
+
+          var $blockFAQ = $plus.closest('.icd__org__faqs__block');
+          var $bodyFAQ  = $blockFAQ.find('.icd__org__faq__child');
+
+          // Run the same animations as manual click (open)
+          // Use stop(true,true) to avoid animation queueing issues
+          $bodyFAQ.stop(true, true).slideDown(1000).delay(800).fadeIn(900);
+          $blockFAQ.find('.icd__org__faq__block__title')
+            .stop(true, true).delay(1000).fadeOut(900).addClass('disabled');
+          $blockFAQ.find('.icd__org__faq__block__desc')
+            .stop(true, true).delay(1000).fadeOut(900).addClass('disabled');
+        } else {
+          // already active — make sure content is visible (defensive)
+          var $blockFAQ = $plus.closest('.icd__org__faqs__block');
+          var $bodyFAQ  = $blockFAQ.find('.icd__org__faq__child');
+          $bodyFAQ.stop(true,true).show();
+          $blockFAQ.find('.icd__org__faq__block__title, .icd__org__faq__block__desc').addClass('disabled').hide();
+        }
+
+        autoClickTimer = null;
+      }, 1000); 
+    });
+  });
+
+  // Optional: clear scheduled auto open if user scrolls or interacts before timeout
+  $(window).on('wheel touchstart keydown scroll', function() {
+    if (autoClickTimer) {
+      clearTimeout(autoClickTimer);
+      autoClickTimer = null;
+    }
+  });
+})();
+
 
         // Accordion toggle functionality
         $('.minus').hide();

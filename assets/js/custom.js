@@ -42,7 +42,7 @@ $(document).ready(function() {
   });
 
 
-  const swiperESG = new Swiper("#esg_logo", {
+  const swiperESG = new Swiper(".single-portfolios #esg_logo", {
     loop: false,
     grabCursor: true,
     navigation: {
@@ -51,11 +51,44 @@ $(document).ready(function() {
     },
     breakpoints: {
       1601: {
-        slidesPerView: 8,
-        spaceBetween: 50,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
       },
       1201: {
-        slidesPerView: 6,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+      },
+      768: {
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+      },
+      450: {
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+      },
+      300: {
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+      },
+    },
+    
+  });
+
+
+  const swiperESG1 = new Swiper(".page-template-esg #esg_logo.esg_logo_main", {
+    loop: false,
+    grabCursor: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      1601: {
+        slidesPerView: 'auto',
+        spaceBetween: 13,
+      },
+      1201: {
+        slidesPerView: 7,
         spaceBetween: 30,
       },
       768: {
@@ -188,113 +221,202 @@ $(document).ready(function () {
 });
 
 $(document).ready(function() {
-    const $hoverGroups = $('#Map-new g > g:nth-child(3)');
+  const $hoverGroups = $('#Map-new g > g:nth-child(3)');
+  let hideTimeout, showTimeout;
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // Store original X positions of <rect> elements only once
-    $hoverGroups.each(function() {
-        const $rect = $(this).find('g:first-child rect');
-        if (!$rect.data('original-x')) {
-            $rect.data('original-x', parseFloat($rect.attr('x'))); // Save original x position
-        }
-    });
+  // --- INIT ---
+  $hoverGroups.each(function() {
+      const $rect = $(this).find('g:first-child rect');
+      if (!$rect.data('original-x')) {
+          $rect.data('original-x', parseFloat($rect.attr('x')));
+      }
+  });
+  $hoverGroups.children('g:first-child').hide().css({ opacity: 0 });
+  $hoverGroups.find('g:first-child text').hide();
 
-    // Initially hide the first child
-    $hoverGroups.children('g:first-child').hide().css({ opacity: 0 });
+  // --- DESKTOP (hover behavior) ---
+  if (!isTouch) {
+      $hoverGroups.on("mouseenter", function() {
+          clearTimeout(hideTimeout);
+          clearTimeout(showTimeout);
 
-    let hideTimeout; // Timeout to prevent flickering
+          const $thisGroup = $(this);
 
-    // Use mouseenter and mouseleave for better hover detection
-    $hoverGroups.on("mouseenter", function() {
-        clearTimeout(hideTimeout); // Cancel any pending hide action
-        const $child = $(this).children('g:first-child');
+          // Close all others first
+          $hoverGroups.not($thisGroup).each(function() {
+              const $child = $(this).children('g:first-child');
+              const $rect = $child.find('rect');
+              const $text = $child.find('text');
+              const originalX = $rect.data('original-x');
+
+              if (!$child.is(':hidden') && !$(this).hasClass('hover_disabled')) {
+                  $text.stop(true, true).hide();
+                  $rect.stop(true, true).animate({ width: 50 }, { 
+                      duration: 400,
+                      step: function(now) {
+                          $(this).attr('x', originalX + (158 - now));
+                      },
+                      complete: function() {
+                          $child.animate({ opacity: 0 }, 200, function() {
+                              $child.hide();
+                          });
+                      }
+                  });
+              }
+          });
+
+          // Show this one
+          const $child = $thisGroup.children('g:first-child');
+          const $rect = $child.find('rect');
+          const $text = $child.find('text');
+          const originalX = $rect.data('original-x');
+
+          if (!$thisGroup.hasClass('hover_disabled')) {
+              $child.stop(true, true).css('opacity', 1).show();
+              $rect.stop(true, true)
+                  .attr('x', originalX + 158)
+                  .css({ width: '50px' })
+                  .animate({ width: 158 }, { 
+                      duration: 250, 
+                      step: function(now) {
+                          $(this).attr('x', originalX + (158 - now));
+                      }
+                  });
+
+              showTimeout = setTimeout(function() {
+                  $text.stop(true, true).fadeIn(300);
+              }, 250);
+          }
+      });
+
+      $hoverGroups.on("mouseleave", function() {
+          clearTimeout(showTimeout);
+
+          const $child = $(this).children('g:first-child');
+          const $rect = $child.find('rect');
+          const $text = $child.find('text');
+          const originalX = $rect.data('original-x');
+
+          if (!$(this).hasClass('hover_disabled')) {
+              $text.stop(true, true).hide();
+
+              hideTimeout = setTimeout(() => {
+                  $rect.stop(true, true).animate({ width: 50 }, { 
+                      duration: 250, 
+                      step: function(now) {
+                          $(this).attr('x', originalX + (158 - now));
+                      },
+                      complete: function() {
+                          $child.animate({ opacity: 0 }, 200, function() {
+                              $child.hide();
+                          });
+                      }
+                  });
+              }, 250);
+          }
+      });
+  }
+
+  // --- MOBILE (tap-to-toggle) ---
+  if (isTouch) {
+    $hoverGroups.css("cursor", "pointer");
+
+    // Use pointerup for iOS + Android reliability
+    $hoverGroups.on("pointerup", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const $thisGroup = $(this);
+        const $child = $thisGroup.children('g:first-child');
         const $rect = $child.find('rect');
+        const $text = $child.find('text');
         const originalX = $rect.data('original-x');
 
-        if (!$(this).hasClass('hover_disabled')) {
+        if ($child.is(':visible')) {
+            // --- Close if already open ---
+            $text.hide();
+            $rect.stop(true, true).animate({ width: 50 }, { 
+                duration: 300,
+                step: function(now) {
+                    $(this).attr('x', originalX + (158 - now));
+                },
+                complete: function() {
+                    $child.fadeOut(200);
+                }
+            });
+        } else {
+            // --- Close all others first ---
+            $hoverGroups.children('g:first-child').hide();
+
+            // --- Open this one ---
             $child.stop(true, true).css('opacity', 1).show();
+
+            // Reset rect to collapsed state before expanding
             $rect.stop(true, true)
-                .attr('x', originalX + 158) // Start from the right
-                .css({ width: '50px' })
+                .attr('x', originalX + (158 - 50))
+                .attr('width', 50)
                 .animate({ width: 158 }, { 
-                    duration: 500, 
+                    duration: 300,
                     step: function(now) {
-                        $(this).attr('x', originalX + (158 - now)); // Move left while expanding
-                    }
-                });
-        }
-    });
-
-    $hoverGroups.on("mouseleave", function() {
-        const $child = $(this).children('g:first-child');
-        const $rect = $child.find('rect');
-        const originalX = $rect.data('original-x');
-
-        if (!$(this).hasClass('hover_disabled')) {
-            setTimeout(function() {
-             $child.hide();
-            }, 100);
-            hideTimeout = setTimeout(() => { // Add delay before hiding
-                $rect.stop(true, true).animate({ width: 50 }, { 
-                    duration: 500, 
-                    step: function(now) {
-                        $(this).attr('x', originalX + (158 - now)); // Move right while shrinking
+                        $(this).attr('x', originalX + (158 - now));
                     },
                     complete: function() {
-                        // $(this).attr('x', originalX); // Reset to original position
-                        $child.animate({ opacity: 0 }, 200, function() {
-                            $child.hide();
-                        });
+                        $text.fadeIn(200);
                     }
                 });
-            }, 100); // 100ms delay to prevent flicker
         }
     });
 
-    // Click event on dots
-    $(document).on('click', 'g[id$="_Dot"]', function() {
-
-        const $parentGroup = $(this).closest('g:nth-child(3)');
-        const $child = $parentGroup.children('g:first-child');
-        const $rect = $child.find('rect');
-        const originalX = $rect.data('original-x');
-
-        clearTimeout(hideTimeout); // Ensure no pending hide action
-
-        // Hide smoothly with right-to-left shrink
-        $rect.stop(true, true).animate({ width: 0 }, { 
-            duration: 500, 
-            step: function(now) {
-                $(this).attr('x', originalX + (158 - now)); // Move right while shrinking
-            },
-            complete: function() {
-                $(this).attr('x', originalX); // Reset to original position
-                $child.animate({ opacity: 0 }, 200, function() {
-                    $child.hide();
-                });
-            }
-        });
-
-        // Disable hover effect for this dot
-        $parentGroup.addClass('hover_disabled');
-
-        // Smooth fade-in for line and tag
-        const $parent = $(this).parent();
-        $parent.find('g[id^="line_"] path').stop(true, true).fadeIn(500);
-        $parent.find('g[id^="Tag_"]').stop(true, true).fadeIn(500);
-    });
-
-    jQuery('.home #Map-new circle, .home svg path').on('click', function(e) {
-        e.preventDefault();  
-        e.stopImmediatePropagation();
-    });
-
-    // Click outside to reset hover effect for all dots
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('[id$="_Dot"]').length) {
-            $hoverGroups.removeClass('hover_disabled'); // Re-enable hover
+    // Tap outside closes everything
+    $(document).on("pointerup", function(e) {
+        if (!$(e.target).closest('#Map-new g > g:nth-child(3)').length) {
+            $hoverGroups.children('g:first-child').fadeOut(200);
         }
     });
+}
+
+
+  // --- DOTS click handler (keep yours as is) ---
+  $(document).on('click', 'g[id$="_Dot"]', function() {
+      const $parentGroup = $(this).closest('g:nth-child(3)');
+      const $child = $parentGroup.children('g:first-child');
+      const $rect = $child.find('rect');
+      const originalX = $rect.data('original-x');
+
+      clearTimeout(hideTimeout);
+
+      $rect.stop(true, true).animate({ width: 0 }, { 
+          duration: 500, 
+          step: function(now) {
+              $(this).attr('x', originalX + (158 - now));
+          },
+          complete: function() {
+              $(this).attr('x', originalX);
+              $child.animate({ opacity: 0 }, 200, function() {
+                  $child.hide();
+              });
+          }
+      });
+
+      $parentGroup.addClass('hover_disabled');
+      const $parent = $(this).parent();
+      $parent.find('g[id^="line_"] path').fadeIn(500);
+      $parent.find('g[id^="Tag_"]').fadeIn(500);
+  });
+
+  $('.home #Map-new circle, .home svg path').on('click', function(e) {
+      e.preventDefault();  
+      e.stopImmediatePropagation();
+  });
+
+  $(document).on('click', function(e) {
+      if (!$(e.target).closest('[id$="_Dot"]').length) {
+          $hoverGroups.removeClass('hover_disabled');
+      }
+  });
 });
+
 
 
 
@@ -408,3 +530,67 @@ jQuery(document).ready(function($){
         });
     };
 });
+
+
+
+var modal = document.querySelector(".popup_modal");
+var triggers = document.querySelectorAll(".popup_trigger_main a");
+var closeButton = document.querySelector(".popup_close-button");
+
+function disablePageScroll() {
+    // Save current scroll position
+    const scrollY = window.scrollY;
+    document.body.dataset.scrollY = scrollY;
+
+    // Lock body position & disable animations
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.overflow = "hidden";
+    document.body.style.width = "100%";
+    document.body.classList.add("modal-open-disable-animations");
+}
+
+function enablePageScroll() {
+    // Restore scroll position
+    const scrollY = parseInt(document.body.dataset.scrollY || "0", 10);
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.overflow = "";
+    document.body.style.width = "";
+    document.body.classList.remove("modal-open-disable-animations");
+    window.scrollTo(0, scrollY);
+}
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+
+    if (modal.classList.contains("show-modal")) {
+        disablePageScroll();
+    } else {
+        enablePageScroll();
+    }
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+// ✅ Attach event listeners
+triggers.forEach(function(trigger) {
+    trigger.addEventListener("click", toggleModal);
+});
+
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+
+
+
+
+
+

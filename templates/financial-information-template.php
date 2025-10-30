@@ -58,7 +58,7 @@
    </div>
 </section>
 
-<section class="graphsec">
+<section class="graphsec" id="financial-highlights-analysis">
     <div class="container-fluid">
         <div class="row gs-topcol fadeaniamtion_sc">
             <div class="col-md-5">
@@ -91,10 +91,10 @@
             <div class="graph-container">
                 <div class="gc-innertop">
                     <div class="graph-title"><?php echo $graph_title; ?></div>
-                    <div class="graph-subtitle"><?php echo esc_html($graph_subtitle); ?></div>
+                    <div class="graph-subtitle"><?php echo $graph_subtitle; ?></div>
                 </div>
                 <div class="graph-value" id="graphValue">
-                    <?php echo !empty($values_array) ? end($values_array) : '0'; ?>
+                    <span class="dirham-symbol">ê</span><?php echo !empty($values_array) ? end($values_array) : '0'; ?>
                 </div>
                 <div class="graph" data-values='<?php echo esc_attr($data_values); ?>'>
                     <!-- Bars will be dynamically added by JavaScript -->
@@ -142,9 +142,10 @@
             ?>
             <div class="piechartmainfr" id="chart-container-<?php echo esc_attr($chart_id); ?>">
 
-                <img id="icd__assets__img" src="/wp-content/uploads/2025/08/Assets.svg">
-                <img id="icd__revenue__img" src="/wp-content/uploads/2025/08/Revenue.svg">
+                <!-- <img id="icd__assets__img" src="/wp-content/uploads/2025/08/Assets.svg">
+                <img id="icd__revenue__img" src="/wp-content/uploads/2025/08/Revenue.svg"> -->
 
+                <img src="<?php echo esc_html(get_sub_field('chart_svg')); ?>">
 
                 <div class="old__piechartmainfr">
                     <h5><span><?php echo esc_html(get_sub_field('pc_name')); ?></span>
@@ -282,7 +283,7 @@ $terms = get_terms([
 ]);
 
 if (!empty($terms)) : ?>
-    <section class="financialreprtsec">
+    <section class="financialreprtsec" id="financial-reports">
         <div class="container smallContainer">
             <div class="fri-main">
             <div class="row fr-toprow">
@@ -380,6 +381,7 @@ if (!empty($terms)) : ?>
                                                             <?php while (have_rows('annual_reports_r')) : the_row(); 
                                                                 $ar_report_file = get_sub_field('ar_report_file');
                                                                 $external_url   = get_sub_field('external_url');
+                                                                $ar_button_text   = get_sub_field('ar_button_text');
                                                                 $report_link    = "";
 
                                                                 if ($ar_report_file) {
@@ -393,16 +395,39 @@ if (!empty($terms)) : ?>
                                                                 <div class="tcr-i-flex">
                                                                     <div class="reportname"><?php the_sub_field('ar_report_name'); ?></div>
                                                                     <div class="reportpdf">
-                                                                        <a href="<?php echo $report_link; ?>" target="_blank">
-                                                                            <?php 
-                                                                                if ($current_lang == 'en') {
-                                                                                    echo pll__('View'); 
-                                                                                } elseif ($current_lang == 'ar') {
-                                                                                    echo pll__('للاطلاع أكثر '); 
-                                                                                }
+                                                                        <?php
+                                                                         if ($ar_report_file) {
+                                                                        // Handle if File field returns array or string
+                                                                            $report_link = is_array($ar_report_file) ? $ar_report_file['url'] : $ar_report_file;
                                                                             ?>
-                                                                            <img src="/wp-content/uploads/2024/11/arrow-2.svg" alt="">
-                                                                        </a>
+                                                                            <a href="<?php echo $report_link; ?>" target="_blank">
+                                                                                <?php 
+                                                                                    if ($current_lang == 'en') {
+                                                                                        echo pll__('Donwload'); 
+                                                                                    } elseif ($current_lang == 'ar') {
+                                                                                        echo pll__('للتحميل'); 
+                                                                                    }
+                                                                                ?>
+                                                                                <img src="/wp-content/uploads/2024/11/arrow-2.svg" alt="">
+                                                                            </a>
+                                                                            <?php
+                                                                        } 
+                                                                        if ($external_url) {
+                                                                            $report_link = $external_url;
+                                                                            ?>
+                                                                            <a href="<?php echo $report_link; ?>" target="_blank">
+                                                                                <?php 
+                                                                                    if ($current_lang == 'en') {
+                                                                                        echo pll__('Explore'); 
+                                                                                    } elseif ($current_lang == 'ar') {
+                                                                                        echo pll__('للاطلاع أكثر'); 
+                                                                                    }
+                                                                                ?>
+                                                                                <img src="/wp-content/uploads/2024/11/arrow-2.svg" alt="">
+                                                                            </a>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             <?php endwhile; ?>
@@ -427,17 +452,19 @@ if (!empty($terms)) : ?>
                                                     </div>
                                                     <div class="tr-r-right">
                                                         <div class="tc-r-inner">
-                                                            <?php while (have_rows('interim_reports_r')) : the_row(); ?>
+                                                            <?php while (have_rows('interim_reports_r')) : the_row();
+                                                            
+                                                                $ir_button_text   = get_sub_field('ir_button_text'); ?>
                                                                 <div class="tcr-i-flex">
                                                                     <div class="reportname"><?php the_sub_field('ir_report_name'); ?></div>
                                                                     <div class="reportpdf">
                                                                         <a href="<?php the_sub_field('ir_report_file'); ?>" target="_blank">
                                                                          <?php 
-                                                                            if ($current_lang == 'en') {
-                                                                                echo pll__('View'); 
-                                                                            } elseif ($current_lang == 'ar') {
-                                                                                echo pll__('للاطلاع أكثر'); 
-                                                                            }
+                                                                                if ($current_lang == 'en') {
+                                                                                    echo pll__('Donwload'); 
+                                                                                } elseif ($current_lang == 'ar') {
+                                                                                    echo pll__('للتحميل'); 
+                                                                                }
                                                                         ?>                                                                 
                                                                             <img src="/wp-content/uploads/2024/11/arrow-2.svg" alt="">
                                                                         </a>

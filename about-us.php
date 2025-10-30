@@ -3,7 +3,34 @@
   get_header();
   $current_lang = pll_current_language();
 ?>
+<style>
+  @media (min-width: 1166px) and (max-width: 1320px){
+        .icd__ceo__msg {
+        top: 38%!important;
+    }
+    .icd__ceo__msg h2.board__heading {
+        position: absolute;
+        top: -246px;
+        font-size: 34px;
+    }
+  }
+  @media (min-width: 1566px) and (max-width: 1750px){
+       .icd__ceo__msg h2.board__heading {
+                top: -140%;
+    }
+}
+@media (min-width: 1366px) and (max-width: 1550px) {
+    .icd__ceo__msg h2.board__heading {
+        top: -78% !important;
+    }
+        html[lang="ar"] .icd__ceo__msg h2.board__heading {
+        top: -87% !important;
+        font-size: 45px;
+        line-height: 43px;
+    }
 
+}
+</style>
 <?php get_template_part('template-parts/page-title'); ?>
 
 <section class="about__icd__main sectionHeight sectionSpacing">
@@ -44,20 +71,35 @@
 </section>
 
 
-<section class="icd__ceo sectionHeight sectionSpacing">
+<section class="icd__ceo sectionHeight sectionSpacing" id="chairman-Message">
   <div class="container smallContainer">
+    
+
+    
     <div class="row">
       <div class="icd__ceo__wrapper">
         <div class="icd__ceo__img">
           <?php if( get_field('ceo_image') ): ?>
           <img src="<?php echo get_field('ceo_image') ?>" alt="CEO">
           <?php endif; ?>
+          
+          <div class="icd_ceo_bio fordesktop">
+            <?php if( get_field('ceo_name') ): ?>
+            <span class="icd__ceo__name"><?php echo get_field('ceo_name') ?></span>
+            <?php endif; ?>
+            <?php if( get_field('ceo_title') ): ?>
+            <span class="icd__ceo__title"><?php echo get_field('ceo_title') ?></span>
+            <?php endif; ?>
+          </div>
         </div>
         <div class="icd__ceo__msg">
+              <?php if( get_field('ceo_heading') ): ?>
+              <h2 class="board__heading"><?php echo get_field('ceo_heading') ?></h2>
+              <?php endif; ?>
           <?php if( get_field('ceo_profile') ): ?>
           <p><?php echo get_field('ceo_profile') ?></p>
           <?php endif; ?>
-          <div class="icd_ceo_bio">
+          <div class="icd_ceo_bio formobile">
             <?php if( get_field('ceo_name') ): ?>
             <span class="icd__ceo__name"><?php echo get_field('ceo_name') ?></span>
             <?php endif; ?>
@@ -71,7 +113,7 @@
   </div>
 </section>
 
-<section class="icd__board sectionHeight sectionSpacing">
+<section class="icd__board sectionHeight sectionSpacing" id="board-of-director">
   <div class="container largeContainer">
     <div class="row">
       <div class="col-md-12">
@@ -120,7 +162,7 @@
 </section>
 
 
-<section class="icd__vision__mission sectionHeight sectionSpacing">
+<section class="icd__vision__mission sectionHeight sectionSpacing" id="our-mission-vission-values">
   <div class="container largeContainer">
     <div class="row">
       <div class="col-md-6">
@@ -178,7 +220,7 @@
 </section>
 
 
-<section class="icd__map icd_section sectionHeight sectionSpacing">
+<section class="icd__map icd_section sectionHeight sectionSpacing" id="global-footprint">
   <div class="container fullContainer">
     <div class="row">
       <div class="icd__map__col content">
@@ -717,7 +759,8 @@
 <g id="SouthA_Dot">
 <g id="North">
 <rect id="Rectangle 12" x="395" y="498" width="164" height="55" rx="20" fill="white"/>
-<text id="North_2" x="0" y="0" tabindex="0" focusable="true" style="fill: #D0C89D;"><tspan x="475.503" y="521.318">أمريكا </tspan><tspan x="480.858" y="540.318">الشمالية
+<text id="North_2" x="0" y="0" tabindex="0" focusable="true" style="fill: #D0C89D;">
+  <tspan x="475.503" y="521.318">أمريكا </tspan><tspan x="480.858" y="540.318">الجنوبية
 </tspan></text>
 </g>
 <g id="Live_Pulse_Animation_2">
@@ -730,7 +773,7 @@
 </g>
 <g id="Tag_2">
 <rect id="bg_2" y="497" width="110" height="55" rx="20" fill="white"/>
-<text id="South" x="0" y="0" tabindex="0" focusable="true" style="fill: #D0C89D;"><tspan x="63.5028" y="520.318">أمريكا </tspan><tspan x="68.8581" y="539.318">الشمالية
+<text id="South" x="0" y="0" tabindex="0" focusable="true" style="fill: #D0C89D;"><tspan x="63.5028" y="520.318">أمريكا </tspan><tspan x="68.8581" y="539.318">الجنوبية
 </tspan></text>
 </g>
 </g>
@@ -816,7 +859,7 @@
 <rect id="Rectangle 12_2" x="287" y="145" width="164" height="55" rx="20" fill="white"/>
 <text id="North_4" x="0" y="0" tabindex="0" focusable="true" style="fill: #D0C89D;">
   <tspan x="375.503" y="168.318">أمريكا </tspan>
-  <tspan x="380.882" y="187.318">الجنوبية
+  <tspan x="380.882" y="187.318">الشمالية
 </tspan></text>
 </g>
 <g id="Live_Pulse_Animation_3">
@@ -829,7 +872,7 @@
 </g>
 <g id="Tag_3">
 <rect id="bg_3" y="145" width="110" height="55" rx="20" fill="white"/>
-<text id="North_5" x="0" y="0" tabindex="0" focusable="true" style="fill: #D0C89D;"><tspan x="63.5028" y="168.318">أمريكا </tspan><tspan x="68.8816" y="187.318">الجنوبية
+<text id="North_5" x="0" y="0" tabindex="0" focusable="true" style="fill: #D0C89D;"><tspan x="63.5028" y="168.318">أمريكا </tspan><tspan x="68.8816" y="187.318">الشمالية
 </tspan></text>
 </g>
 </g>
@@ -1114,7 +1157,11 @@ switch ($continent_name) {
             if ($current_lang == 'en') {
                 echo pll__('Countries'); 
             } elseif ($current_lang == 'ar') {
-                echo pll__('دول'); 
+              if (in_array($continent_class, ['Europe', 'Africa', 'Asia'])) {
+                  echo pll__('دولة');
+                } else {
+                  echo pll__('دول');
+                }
             }
         ?>
     </h4>
@@ -1158,14 +1205,47 @@ switch ($continent_name) {
           </ul>
 
           <?php while( have_rows('map_continents', 'options') ): the_row(); 
-            $continent_name = get_sub_field('continent_name', 'options');
+            // $continent_name = get_sub_field('continent_name', 'options');
           ?>
+                      <?php 
+$continent_name = get_sub_field('continent_name', 'options'); // Retrieve the continent name
+$continent_class = ''; // Initialize the continent class variable
+
+// Map Arabic continent names to English classes
+switch ($continent_name) {
+    case 'آسيا':
+        $continent_class = 'Asia';
+        break;
+    case 'أوروبا':
+        $continent_class = 'Europe';
+        break;
+    case 'أفريقيا':
+        $continent_class = 'Africa';
+        break;
+    case 'أمريكا الجنوبية':
+        $continent_class = 'South America';
+        break;
+    case 'أمريكا الشمالية':
+        $continent_class = 'North America';
+        break;
+    case 'أوقيانوسيا':
+        $continent_class = 'Oceania ';
+        break;
+    default:
+        $continent_class = $continent_name; // Use as-is if not mapped
+}
+?>
             <div class="icd__countries__mobile" data-id="Continent_<?php echo esc_attr($continent_name); ?>" style="display:none;">
               <h4><b><?php echo esc_html(count(get_sub_field('map_country', 'options'))); ?></b>        <?php 
             if ($current_lang == 'en') {
                 echo pll__('Countries'); 
             } elseif ($current_lang == 'ar') {
-                echo pll__('دول'); 
+              
+              if (in_array($continent_class, ['Europe', 'Africa', 'Asia'])) {
+                  echo pll__('دولة');
+                } else {
+                  echo pll__('دول');
+                }
             }
         ?></h4>
               <ul class="icd__countries__list">
@@ -1191,7 +1271,7 @@ switch ($continent_name) {
 </section>
 
 
-<section class="icd__growth sectionHeight sectionSpacing">
+<section class="icd__growth sectionHeight sectionSpacing" id="growth-deversification">
   <div class="container largeContainer">
     <div class="row">
       <div class="col-md-12">

@@ -124,7 +124,7 @@
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
         </div>
-        <div class="swiper-container" id="esg_logo">
+        <div class="swiper-container esg_logo_main" id="esg_logo">
           <!-- If we need navigation buttons -->
 
           <ul class="swiper-wrapper nav nav-tabs esg__groups_list" id="myTab" role="tablist">
@@ -184,6 +184,13 @@
           endif; 
           ?>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="container sh-child-cont">
+    <div class="row">
+      <div class="col-md-12">
+        <p><?php echo get_field('group_focus_global') ?></p>
       </div>
     </div>
   </div>

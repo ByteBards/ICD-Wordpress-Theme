@@ -2,7 +2,83 @@
   /* Template Name: Organisation Page */ 
   get_header();
 ?>
+<style>
+      
+  @media (min-width: 1300px) {
+    .icd__ceo__msg h2.board__heading, html[lang="ar"] .icd__ceo__msg h2.board__heading {
+        width: 100%;
+    }
+}
+  @media (min-width: 1800px) {
+    .icd__ceo__msg h2.board__heading, html[lang="ar"] .icd__ceo__msg h2.board__heading {
+        top: -469px;
+    }
+    
+}
+@media (min-width: 1700px) and (max-width: 1800px){
+  .icd__ceo__msg h2.board__heading, html[lang="ar"] .icd__ceo__msg h2.board__heading {
+        top: -281px;
+    }
+}
+.icd__ceo__img h2.board__heading{
+  display: none;
+}
+@media (max-width: 1050px) {
+.icd__ceo__img img {
+    height: 449px;
+}
+.icd__ceo__msg h2.board__heading {
+    display: none;
+}
+.icd__ceo__img h2.board__heading{
+  display: block;
+          margin-top: 15px;
 
+}
+    section.icd__ceo.director__message span.icd__ceo__title {
+        margin-top: 0;
+    }
+    .page-template-our-organisation section.icd__ceo.director__message .icd__ceo__msg {
+        top: 0;
+    }
+}
+@media screen and (max-width: 1800px) and (min-width: 1200px) {
+        .icd__ceo__msg h2.board__heading {
+        top: -307px;
+    }
+}
+@media (min-width: 1366px) and (max-width: 1550px) {
+    .icd__ceo__msg h2.board__heading {
+        top: -381px !important;
+        font-size: 36px;
+        line-height: 36px;
+    }
+    html[lang="ar"] .icd__ceo__msg h2.board__heading {
+        top: -39% !important;
+    }
+}
+@media (min-width: 1566px) and (max-width: 1750px){
+  .icd__ceo__msg h2.board__heading {
+        font-size: 47px;
+        line-height: 43px;
+    }
+        html[lang="ar"] .icd__ceo__msg h2.board__heading {
+        top: -35% !important;
+    }
+}
+@media (min-width: 1166px) and (max-width: 1320px) {
+    .icd__ceo__msg h2.board__heading {
+        width: 100%;
+        font-size: 30px;
+        line-height: 36px;
+        top: -141px;
+                position: absolute;
+    }
+        html[lang="ar"] .icd__ceo__msg h2.board__heading {
+        top: -17%;
+    }
+}
+</style>
 <?php get_template_part('template-parts/page-title'); ?>
 
 
@@ -21,7 +97,7 @@
   </div>
 </section>
 
-<section class="icd__ceo director__message sectionHeight sectionSpacing">
+<section class="icd__ceo director__message sectionHeight sectionSpacing" id="director-message">
   <div class="container smallContainer">
     <div class="row">
       <div class="icd__ceo__wrapper">
@@ -29,11 +105,17 @@
           <?php if( get_field('organisation_director_image') ): ?>
           <img src="<?php echo get_field('organisation_director_image') ?>" alt="CEO">
           <?php endif; ?>
+          <?php if( get_field('organisation_director_heading') ): ?>
+          <h2 class="board__heading"><?php echo get_field('organisation_director_heading') ?></h2>
+          <?php endif; ?>
           <?php if( get_field('organisation_director_title') ): ?>
           <span class="icd__ceo__title"><?php echo get_field('organisation_director_title') ?></span>
           <?php endif; ?>
         </div>
         <div class="icd__ceo__msg">
+          <?php if( get_field('organisation_director_heading') ): ?>
+          <h2 class="board__heading"><?php echo get_field('organisation_director_heading') ?></h2>
+          <?php endif; ?>
           <?php if( get_field('organisation_director_message') ): ?>
           <p><?php echo get_field('organisation_director_message') ?></p>
           <?php endif; ?>
@@ -54,8 +136,19 @@
           if( have_rows('organisation_faq_lising') ):
           $counter = 1; 
             while( have_rows('organisation_faq_lising') ): the_row();
+            $faq_title_id = get_sub_field('organisation_faq_main_title');
           ?>
-          <div class="icd__org__faqs__block <?php echo 'faqBlock-' . $counter; ?>">
+          <div class="icd__org__faqs__block <?php echo 'faqBlock-' . $counter; ?>" id="<?php if ($faq_title_id == "الحوكمة"){
+                  echo "governance";
+              } else if ($faq_title_id == "النموذج التشغيلي"){
+                  echo "operating-model";
+              } else if ($faq_title_id == "استراتيجية الاستثمار"){
+                  echo "investment-strategy";
+              } else {
+                  echo esc_attr( sanitize_title( $faq_title_id ) );
+              }
+?>
+">
             <div class="icd__org__faq__parent">
               <div class="icd__org__faq__block__title">
                 <h4><?php echo get_sub_field('organisation_faq_main_title'); ?></h4>
