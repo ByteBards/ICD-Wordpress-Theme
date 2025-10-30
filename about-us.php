@@ -71,8 +71,20 @@
 </section>
 
 
-<section class="icd__ceo sectionHeight sectionSpacing" id="chairman-Message">
-  <div class="container smallContainer">
+<!-- <section class="icd__ceo sectionHeight sectionSpacing" id="chairman-Message">
+
+</section> -->
+
+<section class="icd__board sectionHeight sectionSpacing" id="board-of-director">
+  <div class="container largeContainer">
+    <div class="row">
+      <div class="col-md-12">
+        <?php if( get_field('group_members_heading') ): ?>
+        <h2 class="board__heading"><?php echo get_field('group_members_heading') ?></h2>
+        <?php endif; ?>
+      </div>
+    </div>
+      <div class="container smallContainer">
     
 
     
@@ -111,17 +123,6 @@
       </div>
     </div>
   </div>
-</section>
-
-<section class="icd__board sectionHeight sectionSpacing" id="board-of-director">
-  <div class="container largeContainer">
-    <div class="row">
-      <div class="col-md-12">
-        <?php if( get_field('group_members_heading') ): ?>
-        <h2 class="board__heading"><?php echo get_field('group_members_heading') ?></h2>
-        <?php endif; ?>
-      </div>
-    </div>
     <?php   
       $args = array(
         'post_type'        => 'group_members',

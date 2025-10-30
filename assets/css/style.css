@@ -4817,7 +4817,10 @@ body section.singleholder .smallContainer, body section.singleholder .container.
     html[lang="ar"] .icd__countries h4:after{
         width: 100%;
     }
-
+.icd__board .container.smallContainer {
+    margin-top: 80px !important;
+    margin-bottom: 40px !important;
+}
 
     .style__four .inner__child__title:before {
         width: 95%;
@@ -10744,4 +10747,25 @@ h3.total__revenue__price span.dirham-symbol {
 .videomutbtn-main a#muteToggleBtn.active {
   opacity: 1;
   pointer-events: auto;
+}
+
+.icd__board .icd__ceo__msg, html[lang="ar"] .icd__board .icd__ceo__msg {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: unset !important;
+}
+
+.icd__board .icd__ceo__msg h2.board__heading, html[lang="ar"] .icd__board .icd__ceo__msg h2.board__heading {
+    position: unset !important;
+}
+.icd__board .container.smallContainer {
+    background-color: transparent;
+    margin-top: 164px;
+    padding: 0 !important;
+    margin-bottom: 70px;
+}
+.icd__board .icd__ceo__msg {    
+    margin-bottom: 0!important;
 }

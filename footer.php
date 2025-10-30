@@ -527,88 +527,94 @@ graphs.forEach(graph => {
 });
   </script>
   <script>
-    jQuery('.rtl .owl-carouselfinancial').owlCarousel({
-        margin: 15,
-        dots: false,
-        nav: true,
-        loop: false,
-        rtl: true,
-        center: false,
-        responsive: {
-            0: {
-                items: 3,
-                nav: true,
-                margin: 0
-            },
-            400: {
-                items: 4,
-                nav: true,
-                margin: 0
-            },
-            600: {
-                items: 6,
-                nav: true
-            },
-            1000: {
-                items: 6,
-                nav: true
-            },
-            1800: {
-                items: 10,
-                nav: true
-            },
-            1900: {
-                items: 10,
-                nav: true
-            }
-        }
-    });
-    jQuery('.owl-carouselfinancial').owlCarousel({
-        margin: 15,
-        dots: false,
-        nav: true,
-        loop: false,
-        center: false,
-        responsive: {
-            0: {
-                items: 3,
-                nav: true,
-                margin: 0
-            },
-            400: {
-                items: 4,
-                nav: true,
-                margin: 0
-            },
-            600: {
-                items: 6,
-                nav: true
-            },
-            1000: {
-                items: 6,
-                nav: true
-            },
-            1800: {
-                items: 10,
-                nav: true
-            },
-            1900: {
-                items: 10,
-                nav: true
-            }
-        }
-    });
-    $(document).ready(function() {
-        $('.nav-link').first().addClass('active');
-        $('.tab-pane').first().addClass('show active');
-        $('#myTab .nav-item').click(function() {
-            $('#myTab .nav-link').removeClass('active');
-            $('.tab-pane').removeClass('show active');
-            $(this).find('.nav-link').addClass('active');
-            var target = $(this).find('.nav-link').attr('data-bs-target');
-            $(target).addClass('show active');
-        });
-    });
+ jQuery(document).ready(function ($) {
+
+  // ✅ Initialize RTL carousel
+  var $owlRTL = $('.rtl .owl-carouselfinancial');
+  $owlRTL.owlCarousel({
+    margin: 15,
+    dots: false,
+    nav: true,
+    loop: false,
+    rtl: true,
+    center: false,
+    responsive: {
+      0: { items: 3, margin: 0 },
+      400: { items: 4, margin: 0 },
+      600: { items: 6 },
+      1000: { items: 6 },
+      1800: { items: 10 },
+      1900: { items: 10 }
+    },
+    onInitialized: function (event) {
+      moveToLast($(event.target));
+    },
+    onRefreshed: function (event) {
+      moveToLast($(event.target));
+    }
+  });
+
+  // ✅ Initialize LTR carousel
+  var $owl = $('.owl-carouselfinancial').not('.rtl .owl-carouselfinancial');
+  $owl.owlCarousel({
+    margin: 15,
+    dots: false,
+    nav: true,
+    loop: false,
+    center: false,
+    responsive: {
+      0: { items: 3, margin: 0 },
+      400: { items: 4, margin: 0 },
+      600: { items: 6 },
+      1000: { items: 6 },
+      1800: { items: 10 },
+      1900: { items: 10 }
+    },
+    onInitialized: function (event) {
+      moveToLast($(event.target));
+    },
+    onRefreshed: function (event) {
+      moveToLast($(event.target));
+    }
+  });
+
+  // ✅ Helper to move carousel to last slide and make it active
+  function moveToLast($carousel) {
+    setTimeout(function () {
+      var $nonCloned = $carousel.find('.owl-item').not('.cloned');
+      var total = $nonCloned.length;
+      var visibleCount = $carousel.find('.owl-item.active').length || 1;
+      var goToIndex = Math.max(0, total - visibleCount);
+
+      // Scroll carousel to last visible group
+      $carousel.trigger('to.owl.carousel', [goToIndex, 0, true]);
+
+      // After scroll, make last real slide active
+      setTimeout(function () {
+        $carousel.find('.owl-item').removeClass('active custom-active');
+        var $lastReal = $nonCloned.last();
+        $lastReal.addClass('active custom-active');
+      }, 300);
+
+    }, 100);
+  }
+
+  // ✅ Tabs handling (keep existing logic)
+  $('.nav-link').removeClass('active');
+  $('.tab-pane').removeClass('show active');
+  $('.nav-link').last().addClass('active');
+  $('.tab-pane').last().addClass('show active');
+
+  $('#myTab .nav-item').click(function () {
+    $('#myTab .nav-link').removeClass('active');
+    $('.tab-pane').removeClass('show active');
+    $(this).find('.nav-link').addClass('active');
+    var target = $(this).find('.nav-link').attr('data-bs-target');
+    $(target).addClass('show active');
+  });
+
+});
+
   </script>
   <script>
     // Wait for the DOM to load

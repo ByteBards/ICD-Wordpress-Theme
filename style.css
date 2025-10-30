@@ -739,7 +739,7 @@ max-width: 160px;
 
   .graphsec .bar {
     flex: 1;
-    background-color: #3E8162;
+    background-color: #D0C89D;
     border-radius: 0;
     text-align: center;
     position: relative;
@@ -751,7 +751,7 @@ max-width: 160px;
 
   .graphsec  .bar span {
     font-size: 16px;
-    color: #D0C89D;
+    color: #003142;
     font-weight: 600;
     position: relative;
     top: -8px;
@@ -771,13 +771,13 @@ html[lang="ar"] .graphsec .gs-topcol h2 {
     text-align: right !important;
 }
 .piegraph-row {
-    background-color: #d0c89d;
+    background-color: #003142;
     border-radius: 25px;
     padding: 26px 36px;
     margin-top: 25px;
 }
 section.financialreprtsec .fri-main {
-    background-color: #0035ff;
+    background-color: #003142;
     border-radius: 32px;
 }
 section.financialreprtsec .row.fr-toprow .tr-heading {
@@ -802,7 +802,7 @@ section.financialreprtsec .row.fr-toprow .tr-heading {
 .tr-tabssec .tr-r-left h4 {
     margin: 0;
     font-size: 16px;
-    color: #EDEDED;
+    color: #3D8361;
     line-height: 16px;
 }
 .row.tabscontentrow {
@@ -835,10 +835,10 @@ ul#myTab .owl-item li button {
     border-radius: 50px;
 }
 ul#myTab .owl-item li button.active, ul#myTab .owl-item li button:hover {
-    background-color: #4068ff;
+    background-color:#ffffff59;
 }
 .reportpdf a:hover {
-    background-color: #0035ff;
+    background-color: #3D8361;
     color: #fff !important;
 }
 .reportpdf a:hover img {
@@ -864,7 +864,7 @@ section.financialreprtsec {
 .reportpdf a {
     display: flex;
     background-color: #c1c8cc;
-    color: #0035FF;
+    color: #3D8361;
     font-size: 16px;
     gap: 20px;
     align-items: center;

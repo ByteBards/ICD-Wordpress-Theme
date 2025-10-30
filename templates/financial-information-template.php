@@ -408,7 +408,7 @@ if (!empty($terms)) : ?>
                                                                                         echo pll__('للتحميل'); 
                                                                                     }
                                                                                 ?>
-                                                                                <img src="/wp-content/uploads/2024/11/arrow-2.svg" alt="">
+                                                                                <img src="/wp-content/uploads/2025/10/arrow1.svg" alt="">
                                                                             </a>
                                                                             <?php
                                                                         } 
@@ -423,7 +423,7 @@ if (!empty($terms)) : ?>
                                                                                         echo pll__('للاطلاع أكثر'); 
                                                                                     }
                                                                                 ?>
-                                                                                <img src="/wp-content/uploads/2024/11/arrow-2.svg" alt="">
+                                                                                <img src="/wp-content/uploads/2025/10/arrow1.svg" alt="">
                                                                             </a>
                                                                             <?php
                                                                         }
@@ -466,7 +466,7 @@ if (!empty($terms)) : ?>
                                                                                     echo pll__('للتحميل'); 
                                                                                 }
                                                                         ?>                                                                 
-                                                                            <img src="/wp-content/uploads/2024/11/arrow-2.svg" alt="">
+                                                                            <img src="/wp-content/uploads/2025/10/arrow1.svg" alt="">
                                                                         </a>
                                                                     </div>
                                                                 </div>
