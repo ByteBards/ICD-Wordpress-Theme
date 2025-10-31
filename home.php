@@ -46,10 +46,129 @@
           padding-top: 150px !important;
       }   
     }
+    <?php if( get_field('select_hero_section') == 'fullwidth' ) { ?>
+      @media (min-width: 700px){
+.icd__header {
+    background: #ededed00;
+}
+.icd__header__wrapper {
+    background: #ededed00;
+}
+.icd_desktop_l_nav li a {
+    color: #D0C89D !important;
+}
+.icd_desktop_l_nav .popup_trigger_main a:after {
+    background-image: url(/wp-content/uploads/2025/10/searchy.svg);
+}
+#icd__primary__list li a, #icd__primary__list li .sub-menu a {
+    color: #ffffff;
+}
+a:hover {
+    color: #D0C89D !important;
+}
+img.custom-logo {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(313deg) brightness(107%) contrast(105%);
+}
+
+.icd__header.sticky .icd_desktop_l_nav .popup_trigger_main a:after {
+    background-image: url(/wp-content/uploads/2025/10/search.svg);
+}
+.icd__header.sticky {
+    background: #ededed;
+}
+.icd__header.sticky .icd__header__wrapper {
+    background: #ededed;
+}
+.icd__header.sticky .icd_desktop_l_nav li a {
+    color: var(--greenCyan)!important;
+}
+.icd__header.sticky #icd__primary__list li a {
+    color: var(--blueCyan);
+}
+.icd__header.sticky a:hover, .icd__header.sticky #icd__primary__list li .sub-menu a {
+    color: var(--greenCyan) !important;
+}
+.icd__header.sticky img.custom-logo {
+    filter: unset;
+}
+      }
+      
+@media (max-width: 767px) {
+    body section.icd__about {
+        padding-top: 80px !important;
+        min-height: auto!important;
+    }
+    a#muteToggleBtn {
+    width: 60px;
+    height: 60px;
+    }
+}
+      @media (max-width: 700px){
+        section.home__nero_new {
+    padding-top: 90px;
+}
+.home__hero__videoa {
+    height: 236px;
+}
+    .home__hero__videoa wistia-player#hero__video {
+             width: 104%;
+        height: 103%;
+    }
+        .videomutbtn-main {
+        height: 326px !important;
+    }
+    .hhn_text {
+            height: unset;
+        padding-bottom: 0;
+        position: unset;
+        padding: 80px 0;
+}
+.hhn_text * {
+    color: #003241;
+}
+.hhn_text h1 {
+    font-size: 34px;
+    letter-spacing: 0px;
+}
+      }
+@media (min-width: 1200px) {
+    section.icd__about {
+        padding-top: 260px !important;
+    }
+}
+@media (min-width: 767px) and (max-width: 1199px) {
+    section.icd__about {
+        padding-top: 200px !important;
+    }
+}
+    <?php } ?>
 </style>
- <div class="videomutbtn-main">
+<?php if( get_field('select_hero_section') == 'fullwidth' ) { ?>
+<section class="home__nero_new">
+  <div class="home__hero__videoa" data-cursor="sound on" data-cursor-click="sound off">
+      <script src="https://fast.wistia.com/player.js" async></script>
+      <script src="https://fast.wistia.com/embed/i00xf7lqfs.js" async type="module"></script> 
+      <div class="bg_overrelay"></div>
+      <wistia-player class="hero__video1" id="hero__video" media-id="i00xf7lqfs"></wistia-player>
+  </div>
+  
+  <div class="videomutbtn-main">
     <a id="muteToggleBtn" class="mute-toggle-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="" height="" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3.75a.75.75 0 00-1.255-.555L5.46 8H2.75A1.75 1.75 0 001 9.75v4.5c0 .966.784 1.75 1.75 1.75h2.71l5.285 4.805A.75.75 0 0012 20.25V3.75zM6.255 9.305l4.245-3.86v13.11l-4.245-3.86a.75.75 0 00-.505-.195h-3a.25.25 0 01-.25-.25v-4.5a.25.25 0 01.25-.25h3a.75.75 0 00.505-.195z"/><path d="M16.28 8.22a.75.75 0 10-1.06 1.06L17.94 12l-2.72 2.72a.75.75 0 101.06 1.06L19 13.06l2.72 2.72a.75.75 0 101.06-1.06L20.06 12l2.72-2.72a.75.75 0 00-1.06-1.06L19 10.94l-2.72-2.72z"/></svg></a>
   </div>
+  <div class="hhn_text">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1><?php echo get_field('hero_banner_heading'); ?></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ <?php } else { ?>
+<div class="videomutbtn-main">
+        <a id="muteToggleBtn" class="mute-toggle-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="" height="" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3.75a.75.75 0 00-1.255-.555L5.46 8H2.75A1.75 1.75 0 001 9.75v4.5c0 .966.784 1.75 1.75 1.75h2.71l5.285 4.805A.75.75 0 0012 20.25V3.75zM6.255 9.305l4.245-3.86v13.11l-4.245-3.86a.75.75 0 00-.505-.195h-3a.25.25 0 01-.25-.25v-4.5a.25.25 0 01.25-.25h3a.75.75 0 00.505-.195z"/><path d="M16.28 8.22a.75.75 0 10-1.06 1.06L17.94 12l-2.72 2.72a.75.75 0 101.06 1.06L19 13.06l2.72 2.72a.75.75 0 101.06-1.06L20.06 12l2.72-2.72a.75.75 0 00-1.06-1.06L19 10.94l-2.72-2.72z"/></svg></a>
+      </div>
     <section id="icdBanner" class="home__hero icd_section sectionHeight sectionSpacing">
       <div class="container largeContainer">
         <div class="row">
@@ -94,7 +213,7 @@
       
                      
     </section>
-
+<?php } ?>
     <section class="icd__about icd_section sectionHeight sectionSpacing">
       <div class="container fullContainer">
         <div class="row">

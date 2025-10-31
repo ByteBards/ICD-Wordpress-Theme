@@ -416,9 +416,57 @@ function custom_excerpt_length($length) {
 add_filter('excerpt_length', 'custom_excerpt_length', 999);
 
 function my_search_filter_only_selected_post_types( $query ) {
-    // Only modify the main search query on the front end
     if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
-        $query->set( 'post_type', array( 'post', 'page', 'portfolios' ) );
+        $query->set( 'post_type', array( 'page', 'portfolios', 'financial_reports', 'videos' ) );
     }
 }
 add_action( 'pre_get_posts', 'my_search_filter_only_selected_post_types' );
+
+
+function my_search_include_acf_meta( $where, $query ) {
+    global $wpdb;
+
+    if ( ! $query->is_main_query() || ! $query->is_search() || is_admin() ) {
+        return $where;
+    }
+
+    $search_term = $query->get( 's' );
+    if ( empty( $search_term ) ) {
+        return $where;
+    }
+
+    // Sanitize and escape the search term
+    $like = '%' . $wpdb->esc_like( $search_term ) . '%';
+
+    // Replace the default WHERE clause so it searches titles, content, and ACF (meta_value)
+    $where = " AND (
+        {$wpdb->posts}.post_title LIKE '{$like}'
+        OR {$wpdb->posts}.post_content LIKE '{$like}'
+        OR EXISTS (
+            SELECT 1 FROM {$wpdb->postmeta}
+            WHERE {$wpdb->postmeta}.post_id = {$wpdb->posts}.ID
+            AND {$wpdb->postmeta}.meta_value LIKE '{$like}'
+        )
+    )";
+
+    return $where;
+}
+add_filter( 'posts_search', 'my_search_include_acf_meta', 10, 2 );
+
+
+function my_search_join_postmeta( $join, $query ) {
+    global $wpdb;
+
+    if ( ! $query->is_main_query() || ! $query->is_search() || is_admin() ) {
+        return $join;
+    }
+
+    // Ensure postmeta is joined for searching
+    if ( strpos( $join, $wpdb->postmeta ) === false ) {
+        $join .= " LEFT JOIN {$wpdb->postmeta} ON ({$wpdb->posts}.ID = {$wpdb->postmeta}.post_id) ";
+    }
+
+    return $join;
+}
+add_filter( 'posts_join', 'my_search_join_postmeta', 10, 2 );
+

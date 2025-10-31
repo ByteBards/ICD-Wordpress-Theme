@@ -66,10 +66,13 @@
         <?php while ( have_posts() ) : the_post(); ?>
           <?php 
 // Define redirect URLs for English and Arabic
-$media_page_en = 'https://icd.scdwsites.com/media-centre/';
-$media_page_ar = 'https://icd.scdwsites.com/ar/media-centre/';
+$fi_page_en = '/financial-information/#financial-reports';
+$fi_page_ar = '/ar/financial-information/#financial-reports';
+$media_page_en = '/media-centre/';
+$media_page_ar = '/ar/media-centre/';
 
 // Detect correct redirect URL based on language
+$fi_redirect_url = ($current_lang == 'ar') ? $fi_page_ar : $fi_page_en;
 $media_redirect_url = ($current_lang == 'ar') ? $media_page_ar : $media_page_en;
 ?>
 
@@ -92,8 +95,16 @@ $media_redirect_url = ($current_lang == 'ar') ? $media_page_ar : $media_page_en;
         </div>
 
         <?php 
-        // Redirect link logic: if post type is 'post', go to Media Centre
-        $post_link = (get_post_type() === 'post') ? $media_redirect_url : get_permalink();
+        // Redirect link logic: if post type is 'post', go to fi Centre
+        $post_type = get_post_type();
+
+        if ( $post_type === 'financial_reports' ) {
+            $post_link = $fi_redirect_url;
+        } elseif ( $post_type === 'videos' ) {
+            $post_link = $media_redirect_url;
+        } else {
+            $post_link = get_permalink();
+        }
         ?>
 
         <a href="<?php echo esc_url($post_link); ?>">
