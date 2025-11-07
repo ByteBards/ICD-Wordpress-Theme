@@ -28,7 +28,55 @@
         font-size: 45px;
         line-height: 43px;
     }
+            .icd__ceo__msg h2.board__heading {
+        font-size: 32px;
+        line-height: 35px;
+    margin-bottom: 26px !important;
+    }
+        .icd__ceo__msg p {
+        font-size: 19px !important;
+        margin-bottom: 30px !important;
+    }
 
+}
+.board__heading {
+    margin-bottom: 0!important;
+}
+    .icd__ceo__msg h2.board__heading {
+        color: #003142!important;
+    }
+
+@media (max-width: 1030px) {
+      .icd__ceo__msg h2.board__heading {
+    margin-bottom: 26px !important;
+}
+.icd__board .container.smallContainer {
+    margin-top: 80px!important;
+}
+
+    }
+    @media (max-width: 420px) {
+    .icd__ceo__msg {
+        padding-left: 0!important;
+    }
+        .icd_ceo_bio {
+        left: 0!important;
+    }
+}
+@media (max-width: 350px) {
+      .counter__number {
+        font-size: 30px!important;
+    }
+}
+@media screen and (max-width: 400px){
+        html[lang="ar"] .home .icd__map__col.map svg {
+        transform: scale(1.2) translate(-4%, -5%) !important;
+    }
+}
+@media (max-width: 991px) and (min-width: 768px) {
+    html[lang="ar"] .home .icd__map__col.map svg {
+        transform: scale(1) translate(-6%, -20%) !important;
+    }
 }
 </style>
 <?php get_template_part('template-parts/page-title'); ?>
@@ -106,7 +154,7 @@
         </div>
         <div class="icd__ceo__msg">
               <?php if( get_field('ceo_heading') ): ?>
-              <h2 class="board__heading"><?php echo get_field('ceo_heading') ?></h2>
+              <h2 class="board__heading board__heading_about"><?php echo get_field('ceo_heading') ?></h2>
               <?php endif; ?>
           <div class="icd__ceo_infor">
             <?php if( get_field('ceo_profile') ): ?>
@@ -1275,7 +1323,7 @@ switch ($continent_name) {
 </section>
 </div>
  <?php } else { ?>
-  <div class="home">
+  <div class="home" id="global-footprint">
 <section class="icd__map icd_section sectionHeight sectionSpacing 22">
       <div class="container largeContainer">
         <div class="row">

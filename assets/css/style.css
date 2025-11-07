@@ -7857,7 +7857,7 @@ body section.singleholder .smallContainer, body section.singleholder .container.
         font-size: 11px;
     }
     .icd__member__img img {
-        max-height: 175px;
+        max-height: 330px;
         object-fit: cover;
         border-radius: 10px;
     }
@@ -10844,6 +10844,9 @@ section.home__nero_new a#muteToggleBtn {
     line-height: normal;
     letter-spacing: -4px;
 }
+.popup_modal-content img.custom-logo {
+    filter: unset !important;
+}
 @media screen and (max-width: 1100px) {
  .home__hero__videoa, .hhn_text, .home__nero_new .videomutbtn-main {
     height: 50vh;
@@ -10855,7 +10858,14 @@ section.home__nero_new a#muteToggleBtn {
     width: 89.78vh;
     height: 100%;
 }
-
+html[lang="ar"] .popup_trigger svg {
+    margin-left: 20px;
+}
+}
+@media screen and (max-width: 400px){
+        html[lang="ar"] .home .icd__map__col.map svg {
+        transform: scale(1.2) translate(-4%, -5%) !important;
+    }
 }
 @media screen and (min-width: 1700px){
     .hhn_text h1 {

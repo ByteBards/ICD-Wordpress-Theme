@@ -1062,6 +1062,41 @@ $(document).ready(function () {
             $parent.addClass('open child_submenu_open').removeClass('child_submenu_close');
             $submenu.stop(true, true).slideDown(200).css({ opacity: 1, display: 'flex' });
           });
+          // Close menu when submenu link contains a hash (#)
+          $(document).on('click', '#icd__primary__list li.menu-item-has-children .sub-menu li a', function (e) {
+            var href = $(this).attr('href');
+
+            // Check if href contains a #
+            if (href && href.includes('#')) {
+              // Close menu same as main toggle
+              var menu = $('.icd__nav__menus');
+              menu.removeClass('visible');
+
+              var header = $("header");
+              var windowWidth = $(window).width();
+              var newHeight;
+
+              // Reset menu button text based on language
+              var current_lang = $('html').attr('lang');
+              if (current_lang == 'en-US') {
+                $('#icd__nav').text('Menu');
+              } else if (current_lang == 'ar') {
+                $('#icd__nav').text('القائمة الرئيسة');
+              }
+
+              // Remove dropdown open classes
+              $('.icd__nav__menus .dropdown').removeClass('open');
+
+              // Adjust header height like toggle close behavior
+              if (windowWidth <= 767) {
+                newHeight = header.hasClass('sticky') ? '60px' : '70px';
+              } else {
+                newHeight = header.hasClass('sticky') ? '60px' : '90px';
+              }
+
+              $('.icd__header__wrapper').stop().animate({ height: newHeight }, 300);
+            }
+          });
         }
       
       });
@@ -1083,25 +1118,39 @@ $(document).ready(function () {
 
 
 
+
 // MENU CODE
 $(document).ready(function() {
   var initialHeaderHeight = 90;
   var scrolledHeaderHeight = 60;
 
   // SCROLL
-  $(window).on('scroll', function() {
-    if ($('.icd__header__wrapper').hasClass('add_height')) {
-      return; // 🔒 submenu open, don't change height
+ $(window).on('scroll', function() {
+  var scrollTop = $(window).scrollTop();
+  var $header = $('.icd__header');
+  var $headerWrapper = $('.icd__header__wrapper');
+  var $navMenus = $('.icd__nav__menus');
+  var $submenuOpen = $('#icd__primary__list li.child_submenu_open');
+
+  // ✅ If menu/submenu is open
+  if ($headerWrapper.hasClass('add_height') || $submenuOpen.length > 0) {
+    // Always keep sticky class when scrolling
+    if (!$header.hasClass('sticky')) {
+      $header.addClass('sticky');
     }
-    var scrollTop = $(window).scrollTop();
-    if (scrollTop > 0 && !$('.icd__nav__menus').hasClass('visible')) {
-      $('.icd__header').addClass('sticky');
-      $('.icd__header__wrapper').stop().animate({ height: scrolledHeaderHeight }, 200);
-    } else if (scrollTop === 0 && !$('.icd__nav__menus').hasClass('visible')) {
-      $('.icd__header').removeClass('sticky');
-      $('.icd__header__wrapper').stop().animate({ height: initialHeaderHeight }, 200);
-    }
-  });
+    return; // Don't animate height when menu is open
+  }
+
+  // ✅ Normal scroll behavior (when menu not open)
+  if (scrollTop > 0 && !$navMenus.hasClass('visible')) {
+    $header.addClass('sticky');
+    $headerWrapper.stop().animate({ height: scrolledHeaderHeight }, 200);
+  } else if (scrollTop === 0 && !$navMenus.hasClass('visible')) {
+    $header.removeClass('sticky');
+    $headerWrapper.stop().animate({ height: initialHeaderHeight }, 200);
+  }
+});
+
 
   // MENU TOGGLE
   $('#icd__nav').on('click', function(e) {

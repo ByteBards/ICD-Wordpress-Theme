@@ -750,11 +750,16 @@ max-width: 160px;
   }
 
   .graphsec  .bar span {
-    font-size: 17px;
+    font-size: 19px;
     color: #003142;
     font-weight: 600;
     position: relative;
     top: -8px;
+  }
+  @media (min-width: 1320px) and (max-width: 1620px){
+    .graphsec  .bar span {
+    font-size: 17px!important;
+  }
   }
   .graphsec .gs-topcol {
     justify-content: flex-start;
@@ -1967,6 +1972,7 @@ section.singleholder.esg__groups .esg_logo_main ul.nav-tabs.esg__groups_list li.
     margin-left: 20px;
 }
 .popup_modal {
+        z-index: 9999999999999999999;
     position: fixed;
     left: 0;
     top: 0;
@@ -2108,6 +2114,7 @@ section.singleholder.esg__groups .esg_logo_main ul.nav-tabs.esg__groups_list li.
 .searchrow .pagination nav.navigation.pagination {
     margin: 0;
     border: none;
+    opacity: 1!important;
 }
 .searchrow .pagination .nav-links {
     margin-top: 30px;

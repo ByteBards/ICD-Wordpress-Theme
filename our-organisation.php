@@ -78,6 +78,13 @@
         top: -17%;
     }
 }
+@media (min-width: 1360px) and (max-width: 1370px) {
+    .icd__ceo__msg h2.board__heading {
+        top: -410px !important;
+        font-size: 36px;
+        line-height: 36px;
+    }
+}
 </style>
 <?php get_template_part('template-parts/page-title'); ?>
 
@@ -114,7 +121,7 @@
         </div>
         <div class="icd__ceo__msg">
           <?php if( get_field('organisation_director_heading') ): ?>
-          <h2 class="board__heading"><?php echo get_field('organisation_director_heading') ?></h2>
+          <h2 class="board__heading board__heading_organization"><?php echo get_field('organisation_director_heading') ?></h2>
           <?php endif; ?>
           <?php if( get_field('organisation_director_message') ): ?>
           <p><?php echo get_field('organisation_director_message') ?></p>

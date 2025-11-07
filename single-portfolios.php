@@ -20,6 +20,35 @@
 html[lang="ar"] .content-5-4-3 h2.hmss-i-nam span.mainsymblol {
     padding-right: 5px;
 }
+.esg_logo_arrow{
+    display: none;
+}
+@media (max-width: 760px) {
+    .esg_logo_arrow {
+        top: 50px;
+    display: block;
+    }
+    .single-portfolios #esg_logo {
+    padding: 0 20px !important;
+}
+.singleholder ul.nav-tabs {
+    max-width: 100% !important;
+}
+}
+@media (max-width: 480px) {
+	
+	.esg_logo_arrow .swiper-button-prev {
+    left: 0px;
+    background: #fff;
+    height: 50px;
+}
+
+.esg_logo_arrow .swiper-button-next {
+    right: 0px;
+    background: #fff;
+    height: 50px;
+}
+}
 </style>
 <section class="singlebanner">
    <div class="container toprow smallContainer">
@@ -248,9 +277,24 @@ if ( get_field('select_type') == 'sin_ser' ) {
              </div>
           </div>
           <div class="row">
-          <div class="col-md-12">
-
-
+          <div class="col-md-12" style="position:relative;">
+<?php 
+                  if (have_rows('add_sng_holder')) :
+                    $tab_indexss = 0;
+                    while (have_rows('add_sng_holder')) : the_row();
+                        $logo_urlss = get_sub_field('sng_holder_logo');
+                        $logoss[] = $logo_urssl;
+                    endwhile;
+                    if (count($logoss) > 1): 
+                    ?>
+            <div class="esg_logo_arrow">
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+<?php 
+                    endif; 
+                    endif; 
+                ?>
             <div class="swiper-container" id="esg_logo">
                 <?php 
                   if (have_rows('add_sng_holder')) :
@@ -634,10 +678,13 @@ if ( get_field('select_type') == 'sin_ser' ) {
                                     </div>
                                     <?php if( have_rows('add_mult_holder') ): ?>
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" style="position:relative;">
 
-
-
+                                                    <div class="esg_logo_arrow">
+                                                        <div class="swiper-button-prev"></div>
+                                                        <div class="swiper-button-next"></div>
+                                                    </div>
+                                               
                                                     <div class="swiper-container" id="esg_logo">
                                                         <ul class="swiper-wrapper nav nav-tabs esg__groups_list" id="myTab-service-<?php echo $counter; ?>" role="tablist">
                                                             <?php 

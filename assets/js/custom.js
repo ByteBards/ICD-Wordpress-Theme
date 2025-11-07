@@ -41,38 +41,27 @@ $(document).ready(function() {
     }
   });
 
+document.querySelectorAll('.single-portfolios #esg_logo').forEach((slider, index) => {
+  const nextBtn = slider.closest('.singleholder').querySelector('.swiper-button-next');
+  const prevBtn = slider.closest('.singleholder').querySelector('.swiper-button-prev');
 
-  const swiperESG = new Swiper(".single-portfolios #esg_logo", {
+  new Swiper(slider, {
     loop: false,
     grabCursor: true,
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: nextBtn,
+      prevEl: prevBtn,
     },
     breakpoints: {
-      1601: {
-        slidesPerView: 'auto',
-        spaceBetween: 0,
-      },
-      1201: {
-        slidesPerView: 'auto',
-        spaceBetween: 0,
-      },
-      768: {
-        slidesPerView: 'auto',
-        spaceBetween: 0,
-      },
-      450: {
-        slidesPerView: 'auto',
-        spaceBetween: 0,
-      },
-      300: {
-        slidesPerView: 'auto',
-        spaceBetween: 0,
-      },
+      1601: { slidesPerView: 'auto', spaceBetween: 0 },
+      1201: { slidesPerView: 'auto', spaceBetween: 0 },
+      768:  { slidesPerView: 'auto', spaceBetween: 0 },
+      450:  { slidesPerView: 4, spaceBetween: 15 },
+      300:  { slidesPerView: 2, spaceBetween: 10 },
     },
-    
   });
+});
+
 
 
   const swiperESG1 = new Swiper(".page-template-esg #esg_logo.esg_logo_main", {

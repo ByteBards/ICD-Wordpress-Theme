@@ -487,9 +487,21 @@ setTimeout(() => {
     });
   });
 
-  gsap.from('.board__heading', {
+  gsap.from('.board__heading_about', {
     scrollTrigger: {
-      trigger: '.board__heading',
+      trigger: '.board__heading_about',
+      start: 'top 65%',
+      toggleActions: 'play none none none',
+    },
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    ease: 'power2.out'
+  });
+
+    gsap.from('.board__heading_organization', {
+    scrollTrigger: {
+      trigger: '.board__heading_organization',
       start: 'top 95%',
       toggleActions: 'play none none none',
     },
@@ -1005,6 +1017,19 @@ gsap.to(".total__assets__box__bg img", {
 //   }
 // });
 
+// gsap.to(".total__employee__box__bg img", {
+//   xPercent: -30,
+//   opacity: 0.6,
+//   ease: "power1.out",
+//   scrollTrigger: {
+//     trigger: ".total__employee__box__bg",
+//     start: "top bottom",
+//     end: "bottom top",
+//     scrub: true,
+//     markers: false,
+//   }
+// });
+
  gsap.to(".mainrow", {
     backgroundPosition: "-150px", // End position in pixels
     ease: "none",
@@ -1058,7 +1083,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      gsap.fromTo(ceoMessage, { y: 50 }, {
+      gsap.fromTo(ceoMessage, { y: 0 }, {
         y: 0, 
         duration: 1, 
         scrollTrigger: {

@@ -527,93 +527,107 @@ graphs.forEach(graph => {
 });
   </script>
   <script>
- jQuery(document).ready(function ($) {
+    
+    jQuery('.owl-carouselfinancial').each(function () {
+    var $this = jQuery(this);
+    var $slides = $this.children().get().reverse(); // reverse order
+    $this.empty().append($slides); // re-append reversed slides
+});
+ jQuery('.rtl .owl-carouselfinancial').owlCarousel({
+        margin: 15,
+        dots: false,
+        nav: true,
+        loop: false,
+        rtl: true,
+        center: false,
+        responsive: {
+            0: {
+                items: 3,
+                nav: true,
+                margin: 0
+            },
+            400: {
+                items: 4,
+                nav: true,
+                margin: 0
+            },
+            600: {
+                items: 6,
+                nav: true
+            },
+            1000: {
+                items: 6,
+                nav: true
+            },
+            1800: {
+                items: 10,
+                nav: true
+            },
+            1900: {
+                items: 10,
+                nav: true
+            }
+        }
+    });
+    jQuery('.owl-carouselfinancial').owlCarousel({
+        margin: 15,
+        dots: false,
+        nav: true,
+        loop: false,
+        center: false,
+        responsive: {
+            0: {
+                items: 3,
+                nav: true,
+                margin: 0
+            },
+            400: {
+                items: 4,
+                nav: true,
+                margin: 0
+            },
+            600: {
+                items: 6,
+                nav: true
+            },
+            1000: {
+                items: 6,
+                nav: true
+            },
+            1800: {
+                items: 10,
+                nav: true
+            },
+            1900: {
+                items: 10,
+                nav: true
+            }
+        }
+    });
+$(document).ready(function () {
 
-  // ✅ Initialize RTL carousel
-  var $owlRTL = $('.rtl .owl-carouselfinancial');
-  $owlRTL.owlCarousel({
-    margin: 15,
-    dots: false,
-    nav: true,
-    loop: false,
-    rtl: true,
-    center: false,
-    responsive: {
-      0: { items: 3, margin: 0 },
-      400: { items: 4, margin: 0 },
-      600: { items: 6 },
-      1000: { items: 6 },
-      1800: { items: 10 },
-      1900: { items: 10 }
-    },
-    onInitialized: function (event) {
-      moveToLast($(event.target));
-    },
-    onRefreshed: function (event) {
-      moveToLast($(event.target));
-    }
-  });
+  // ✅ Check if #financial-reports exists first
+  if ($('#financial-reports').length) {
 
-  // ✅ Initialize LTR carousel
-  var $owl = $('.owl-carouselfinancial').not('.rtl .owl-carouselfinancial');
-  $owl.owlCarousel({
-    margin: 15,
-    dots: false,
-    nav: true,
-    loop: false,
-    center: false,
-    responsive: {
-      0: { items: 3, margin: 0 },
-      400: { items: 4, margin: 0 },
-      600: { items: 6 },
-      1000: { items: 6 },
-      1800: { items: 10 },
-      1900: { items: 10 }
-    },
-    onInitialized: function (event) {
-      moveToLast($(event.target));
-    },
-    onRefreshed: function (event) {
-      moveToLast($(event.target));
-    }
-  });
+    // Remove 'show active' from all tab-panes inside #financial-reports
+    $('#financial-reports .tab-pane').removeClass('show active');
 
-  // ✅ Helper to move carousel to last slide and make it active
-  function moveToLast($carousel) {
-    setTimeout(function () {
-      var $nonCloned = $carousel.find('.owl-item').not('.cloned');
-      var total = $nonCloned.length;
-      var visibleCount = $carousel.find('.owl-item.active').length || 1;
-      var goToIndex = Math.max(0, total - visibleCount);
+    // Add 'show active' only to the last tab-pane inside #financial-reports
+    $('#financial-reports .tab-pane').last().addClass('show active');
 
-      // Scroll carousel to last visible group
-      $carousel.trigger('to.owl.carousel', [goToIndex, 0, true]);
-
-      // After scroll, make last real slide active
-      setTimeout(function () {
-        $carousel.find('.owl-item').removeClass('active custom-active');
-        var $lastReal = $nonCloned.last();
-        $lastReal.addClass('active custom-active');
-      }, 300);
-
-    }, 100);
+    // Tab click functionality (only within #financial-reports)
+    $('#financial-reports #myTab .nav-item').click(function () {
+      $('#financial-reports #myTab .nav-link').removeClass('active');
+      $('#financial-reports .tab-pane').removeClass('show active');
+      $(this).find('.nav-link').addClass('active');
+      var target = $(this).find('.nav-link').attr('data-bs-target');
+      $('#financial-reports ' + target).addClass('show active');
+    });
   }
 
-  // ✅ Tabs handling (keep existing logic)
-  $('.nav-link').removeClass('active');
-  $('.tab-pane').removeClass('show active');
-  $('.nav-link').last().addClass('active');
-  $('.tab-pane').last().addClass('show active');
-
-  $('#myTab .nav-item').click(function () {
-    $('#myTab .nav-link').removeClass('active');
-    $('.tab-pane').removeClass('show active');
-    $(this).find('.nav-link').addClass('active');
-    var target = $(this).find('.nav-link').attr('data-bs-target');
-    $(target).addClass('show active');
-  });
-
 });
+
+
 
   </script>
   <script>

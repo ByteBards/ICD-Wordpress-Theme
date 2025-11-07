@@ -92,15 +92,31 @@ img.custom-logo {
     filter: unset;
 }
       }
-      
+     .home__nero_new a#muteToggleBtn {
+    width: 50px;
+    height: 50px;
+}
+.home__nero_new a#muteToggleBtn svg {
+    width: 30px;
+    height: 30px;
+} 
+
+@media screen and (max-width: 400px){
+        html[lang="ar"] .home .icd__map__col.map svg {
+        transform: scale(1.2) translate(-4%, -5%) !important;
+    }
+    .home .icd__map__col.map svg {
+        transform: scale(1.2) translate(-15%, -6%) !important;
+    }
+}
 @media (max-width: 767px) {
     body section.icd__about {
         padding-top: 80px !important;
         min-height: auto!important;
     }
     a#muteToggleBtn {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     }
 }
       @media (max-width: 700px){
@@ -133,13 +149,58 @@ img.custom-logo {
       }
 @media (min-width: 1200px) {
     section.icd__about {
-        padding-top: 260px !important;
+        padding-top: 200px !important;
+    }
+}
+@media (min-width: 1801px) {
+    section.icd__about {
+        padding-top: 295px !important;
+    }
+}
+@media (max-width: 380px){
+  .home__hero__videoa {
+    height: 222px!important;
+}
+    .videomutbtn-main {
+        height: 312px !important;
+    }
+}
+@media (max-width: 365px){
+  .home__hero__videoa {
+    height: 214px !important;
+}
+    .videomutbtn-main {
+        height: 302px !important;
+    }
+}
+@media (max-width: 345px) {
+    .home__hero__videoa {
+        height: 200px !important;
+    }
+        .videomutbtn-main {
+        height: 290px !important;
     }
 }
 @media (min-width: 767px) and (max-width: 1199px) {
     section.icd__about {
-        padding-top: 200px !important;
+        padding-top: 100px !important;
     }
+    .popup_trigger svg {
+    fill: #D0C89D !important;
+}
+    .icd__nav_wrapper .icd__nav {
+        color: #D0C89D!important;
+    }
+}
+@media (min-width: 767px) and (max-width: 830px){
+  .hhn_text h1 {
+    font-size: 44px !important;
+    letter-spacing: 0px !important;
+}
+}
+.videomutbtn-main a#muteToggleBtn {
+  opacity: 1!important;
+  pointer-events: auto!important;
 }
     <?php } ?>
 </style>
